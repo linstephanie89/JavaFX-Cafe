@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CoffeeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CoffeeController">
    <children>
-      <MenuButton fx:id="selectedSize" layoutX="28.0" layoutY="48.0" mnemonicParsing="false" onAction="#cupSize" text="Select Size">
+      <MenuButton fx:id="selectedSize" layoutX="103.0" layoutY="67.0" mnemonicParsing="false" onAction="#cupSize" text="Select Size">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#cupSize" text="Short" />
           <MenuItem mnemonicParsing="false" onAction="#cupSize" text="Tall" />
@@ -17,7 +13,7 @@
             <MenuItem mnemonicParsing="false" onAction="#cupSize" text="Venti" />
         </items>
       </MenuButton>
-      <MenuButton fx:id="selectedQuantity" layoutX="28.0" layoutY="111.0" mnemonicParsing="false" onAction="#setQuantity" text="Select Quantity">
+      <MenuButton fx:id="selectedQuantity" layoutX="103.0" layoutY="187.0" mnemonicParsing="false" onAction="#setQuantity" text="Select Quantity">
          <items>
             <MenuItem mnemonicParsing="false" onAction="#setQuantity" text="1" />
             <MenuItem mnemonicParsing="false" onAction="#setQuantity" text="2" />
@@ -26,12 +22,19 @@
             <MenuItem mnemonicParsing="false" onAction="#setQuantity" text="5" />
          </items>
       </MenuButton>
-      <CheckBox fx:id="frenchVanilla" layoutX="230.0" layoutY="52.0" mnemonicParsing="false" text="French Vanilla" />
-      <CheckBox fx:id="caramel" layoutX="230.0" layoutY="93.0" mnemonicParsing="false" text="Caramel" />
-      <CheckBox fx:id="sweetCream" layoutX="360.0" layoutY="52.0" mnemonicParsing="false" text="Sweet Cream " />
-      <CheckBox fx:id="mocha" layoutX="361.0" layoutY="90.0" mnemonicParsing="false" text="Mocha" />
-      <CheckBox fx:id="irishCream" layoutX="230.0" layoutY="128.0" mnemonicParsing="false" text="Irish Cream" />
-      <Button layoutX="28.0" layoutY="220.0" mnemonicParsing="false" onAction="#add" text="Add" />
-      <Label fx:id="subTotalLabel" layoutX="230.0" layoutY="220.0" text="Label" />
+      <CheckBox fx:id="frenchVanilla" layoutX="196.0" layoutY="128.0" mnemonicParsing="false" text="French Vanilla" />
+      <CheckBox fx:id="caramel" layoutX="423.0" layoutY="128.0" mnemonicParsing="false" text="Caramel" />
+      <CheckBox fx:id="sweetCream" layoutX="93.0" layoutY="128.0" mnemonicParsing="false" text="Sweet Cream " />
+      <CheckBox fx:id="mocha" layoutX="517.0" layoutY="128.0" mnemonicParsing="false" text="Mocha" />
+      <CheckBox fx:id="irishCream" layoutX="319.0" layoutY="128.0" mnemonicParsing="false" text="Irish Cream" />
+      <Button layoutX="26.0" layoutY="305.0" mnemonicParsing="false" onAction="#add" text="Add" />
+      <Label fx:id="coffeeMessage" layoutX="28.0" layoutY="235.0" prefHeight="18.0" prefWidth="458.0" />
+      <Label layoutX="33.0" layoutY="70.0" prefHeight="18.0" prefWidth="38.0" text="Size:" />
+      <Label layoutX="28.0" layoutY="128.0" text="Flavor:" />
+      <Label layoutX="28.0" layoutY="191.0" text="Quantity:" />
+      <Label layoutX="26.0" layoutY="253.0" text="Sub Total:" />
+      <TextArea fx:id="subTotalCoffee" layoutX="96.0" layoutY="242.0" prefHeight="26.0" prefWidth="200.0" />
+      <Button layoutX="77.0" layoutY="305.0" mnemonicParsing="false" text="Remove" />
+      <Button layoutX="147.0" layoutY="305.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

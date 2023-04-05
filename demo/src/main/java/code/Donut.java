@@ -12,9 +12,9 @@ public class Donut extends MenuItem{
         super(name);
         this.type = type;
         this.flavor = flavor;
-        if(type.equals("yeast")){
+        if(type.equals("Yeast")){
             this.price = YEAST_PRICE;
-        }else if(type.equals("cake")){
+        }else if(type.equals("Cake")){
             this.price = CAKE_PRICE;
         }else{
             this.price = DONUT_HOLE_PRICE;
@@ -27,4 +27,6 @@ public class Donut extends MenuItem{
     public double itemPrice() {
         return price*quantity;
     }
+    @Override
+    public int getQuantity() { return quantity;}
 }
