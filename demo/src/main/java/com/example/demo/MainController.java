@@ -17,6 +17,8 @@ public class MainController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    protected Order order;
+    protected orderBasket orderBasket;
 
     @FXML
     public void switchDonut(ActionEvent event) throws IOException{

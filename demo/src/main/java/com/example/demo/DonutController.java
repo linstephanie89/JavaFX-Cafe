@@ -10,10 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -33,7 +30,11 @@ public class DonutController implements Initializable {
     private ListView <String> donutList;
     @FXML
     private TextField quantityInput;
-    private Order orderBasket;
+    @FXML
+    private Label donutMessage;
+    @FXML
+    private TextArea subTotal;
+    private orderBasket orderBasket;
     private int orderNum = 1;
     private int capacity = 4;
     private String[] donutTypes = {"Yeast", "Cake", "Donut Hole"};
@@ -45,7 +46,7 @@ public class DonutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       orderBasket = new Order(orderNum, new MenuItem[4]);
+       orderBasket = new orderBasket();
         donutComboBox.getItems().addAll(donutTypes);
         donutComboBox.setOnAction(event -> {
             String selectedType = donutComboBox.getValue();
@@ -82,14 +83,51 @@ public class DonutController implements Initializable {
     public void addDonut(ActionEvent event){
         String selectedType = donutComboBox.getValue();
         String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
-        int quantity = Integer.parseInt(quantityInput.getText());
 
-        if(selectedType != null && selectedFlavor != null && quantity >0){
-            Donut donut = new Donut("donut", selectedType, selectedFlavor);
+        if (selectedType == null) {
+            donutMessage.setText("Please select the donut type.");
+        } else if (selectedFlavor == null) {
+            donutMessage.setText("Please select a flavor.");
+        } else if (quantityInput.getText().isEmpty()) {
+            donutMessage.setText("Please enter a quantity.");
+        } else {
+            int quantity = Integer.parseInt(quantityInput.getText());
+            Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
             donut.setQuantity(quantity);
             orderBasket.add(donut);
-            //calculate subTotal
-            //clear selection
+            subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+            donutMessage.setText("Your donut order has been placed successfully!");
+        }
+    }
+
+    @FXML
+    public void removeDonut(ActionEvent event) {
+        String selectedType = donutComboBox.getValue();
+        String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
+
+        if (selectedType == null) {
+            donutMessage.setText("Please select the donut type.");
+        } else if (selectedFlavor == null) {
+            donutMessage.setText("Please select a flavor.");
+        } else if (quantityInput.getText().isEmpty()) {
+            donutMessage.setText("Please enter a quantity.");
+        } else {
+            int quantity = Integer.parseInt(quantityInput.getText());
+            Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
+            donut.setQuantity(quantity);
+            Donut currentItem = (Donut) orderBasket.returnItem(donut);
+            if (currentItem == null) {
+                donutMessage.setText("Failed to remove item - no matching order");
+            }
+            if (currentItem != null) {
+                if (currentItem.getQuantity() < quantity) {
+                    donutMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
+                } else {
+                    orderBasket.remove(donut);
+                    subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+                    donutMessage.setText("Your donut order has been removed successfully!");;
+                }
+            }
         }
     }
     @FXML
@@ -97,6 +135,15 @@ public class DonutController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("order-view.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         OrderBasketController.showBasketItems((ObservableList<javafx.scene.control.MenuItem>) orderBasket);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void backToMainDonut(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("main-view.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -14,34 +14,43 @@ public class Coffee extends MenuItem {
     private double NONE = 0;
 
     public Coffee(String name, String cupSize, String[] addIns, int quantity){
-        super(name);
+        super(name, quantity);
         this.cupSize = cupSize;
         this.addIns = addIns;
-        this.quantity = quantity;
-        this.price = NONE;
-    }
-
-    @Override
-    public int getQuantity() { return quantity;}
-
-    @Override
-    public double itemPrice(){
-        price = 0.0;
         if(cupSize.equals("Short")){
-            price = SHORT_PRICE;
+            this.price = SHORT_PRICE;
         }else if(cupSize.equals("Tall")){
-            price = TALL_PRICE;
+            this.price = TALL_PRICE;
         }else if(cupSize.equals("Grande")){
-            price = GRANDE_PRICE;
+            this.price = GRANDE_PRICE;
         }else{
-            price = VENTI_PRICE;
+            this.price = VENTI_PRICE;
         }
 
         for(String item: addIns){
             if (item != null) {
-                price +=addInPrice;
+                this.price +=addInPrice;
             }
         }
+    }
+
+
+    @Override
+    public int getQuantity() { return quantity;}
+    public String getSize() {
+        return cupSize;
+    }
+
+    public String[] getAddIns() {
+        return addIns;
+    }
+
+//    public void setQuantity(int newQuantity) {
+//        this.quantity = newQuantity;
+//    }
+
+    @Override
+    public double itemPrice(){
         return price*quantity;
     }
 
