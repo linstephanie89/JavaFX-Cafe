@@ -46,7 +46,7 @@ public class DonutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       orderBasket = new orderBasket();
+        orderBasket = new orderBasket();
         donutComboBox.getItems().addAll(donutTypes);
         donutComboBox.setOnAction(event -> {
             String selectedType = donutComboBox.getValue();
@@ -93,7 +93,7 @@ public class DonutController implements Initializable {
         } else {
             int quantity = Integer.parseInt(quantityInput.getText());
             Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
-            donut.setQuantity(quantity);
+            //donut.setQuantity(quantity);
             orderBasket.add(donut);
             subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
             donutMessage.setText("Your donut order has been placed successfully!");
