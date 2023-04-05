@@ -46,6 +46,16 @@ public class Coffee extends MenuItem {
         return addIns;
     }
 
+    public boolean compareAddIns(Coffee coffee) {
+        String[] newAddIns = coffee.getAddIns();
+        for (int i = 0; i < 5; i++) {
+            if (newAddIns[i] != this.addIns[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 //    public void setQuantity(int newQuantity) {
 //        this.quantity = newQuantity;
 //    }

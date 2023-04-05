@@ -43,10 +43,12 @@ public class DonutController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    public void setOrderBasket(orderBasket orderbasket) {
+        this.orderBasket = orderbasket;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        orderBasket = new orderBasket();
         donutComboBox.getItems().addAll(donutTypes);
         donutComboBox.setOnAction(event -> {
             String selectedType = donutComboBox.getValue();
@@ -114,7 +116,7 @@ public class DonutController implements Initializable {
         } else {
             int quantity = Integer.parseInt(quantityInput.getText());
             Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
-            donut.setQuantity(quantity);
+            //donut.setQuantity(quantity);
             Donut currentItem = (Donut) orderBasket.returnItem(donut);
             if (currentItem == null) {
                 donutMessage.setText("Failed to remove item - no matching order");
@@ -142,7 +144,13 @@ public class DonutController implements Initializable {
 
     @FXML
     public void backToMainDonut(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        root = loader.load();
+
+        MainController main = loader.getController();
+        main.setOrderBasket(orderBasket);
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

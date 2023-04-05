@@ -35,13 +35,19 @@ public class CoffeeController {
     private TextArea subTotalCoffee;
     private String size;
     private String quantityString;
-    private String[] addIns;
-    private orderBasket orderBasket = new orderBasket();
+    //private String[] addIns;
+    private orderBasket orderBasket;
     private int initialAddInSize = 0;
     private int quantity;
     private int CAPACITY = 5;
     private Stage stage;
     private Scene scene;
+    private Parent root;
+
+
+    public void setOrderBasket(orderBasket orderbasket) {
+        orderBasket = orderbasket;
+    }
 
     @FXML
     public void cupSize(ActionEvent event){
@@ -53,33 +59,36 @@ public class CoffeeController {
     public void setQuantity(ActionEvent event){
         MenuItem item = (MenuItem) event.getSource();
         quantityString = item.getText();
+        quantity = Integer.parseInt(quantityString);
         selectedQuantity.setText(item.getText());
     }
-    private void addToBasket(String size, int quantity){
-        addIns = new String[CAPACITY];
-        int index = initialAddInSize;
+    private Coffee createCoffee(){
+        String[] addIns = new String[CAPACITY];
+        //int index = initialAddInSize;
 
         if(sweetCream.isSelected()){
-            addIns[index] = "Sweet Cream";
-            index++;
+            addIns[0] = "Sweet Cream";
+            //index++;
         }else if(frenchVanilla.isSelected()){
-            addIns[index] = "French Vanilla";
-            index++;
+            addIns[1] = "French Vanilla";
+            //index++;
         }else if(irishCream.isSelected()){
-            addIns[index]= "Irish Cream";
-            index++;
+            addIns[2]= "Irish Cream";
+            //index++;
         }else if(caramel.isSelected()){
-            addIns[index] = "Caramel";
-            index++;
+            addIns[3] = "Caramel";
+            //index++;
         }else if(mocha.isSelected()){
-            addIns[index] = "Mocha";
-            index++;
+            addIns[4] = "Mocha";
+            //index++;
         }
-        quantity = Integer.parseInt(quantityString);
+        for (int i = 0; i < 5; i++) {
+            System.out.println(addIns[i]);
+        }
+
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
-        orderBasket.add(coffee);
-        double subTotal = orderBasket.getTotalPrice();
-        subTotalCoffee.setText(String.format("$%.2f", subTotal));
+
+        return coffee;
     }
     @FXML
     public void addCoffee(ActionEvent event){
@@ -88,7 +97,10 @@ public class CoffeeController {
         } else if (quantityString == null) {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
-            addToBasket(size, quantity);
+            Coffee coffee = createCoffee();
+            orderBasket.add(coffee);
+            double subTotal = orderBasket.getTotalPrice();
+            subTotalCoffee.setText(String.format("$%.2f", subTotal));
             coffeeMessage.setText("Your coffee order has been placed successfully!");
         }
 
@@ -106,11 +118,38 @@ public class CoffeeController {
 
     @FXML
     public void removeCoffee(ActionEvent event) {
+        if (size == null) {
+            coffeeMessage.setText("Please select cup size.");
+        } else if (quantityString == null) {
+            coffeeMessage.setText("Please enter a quantity.");
+        } else {
+            Coffee coffee = createCoffee();
+            Coffee currentItem = (Coffee) orderBasket.returnItem(coffee);
+            if (currentItem == null) {
+                coffeeMessage.setText("Failed to remove item - no matching order");
+            }
+            if (currentItem != null) {
+                if (currentItem.getQuantity() < quantity) {
+                    coffeeMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
+                } else {
+                    orderBasket.remove(coffee);
+                    subTotalCoffee.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+                    coffeeMessage.setText("Your coffee order has been removed successfully!");
+                }
 
+            }
+
+        }
     }
     @FXML
     public void backToMainCoffee(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        root = loader.load();
+
+        MainController main = loader.getController();
+        main.setOrderBasket(orderBasket);
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

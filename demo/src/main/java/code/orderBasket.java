@@ -23,13 +23,12 @@ public class orderBasket {
             this.orderBasket[i] = oldOrderBasket[i];
         }
     }
+
     public int findItem(MenuItem item) {
         for (int i = 0; i < size; i++) {
             MenuItem currentItem = orderBasket[i];
-            if (currentItem instanceof Coffee && item instanceof Coffee) {
-                if (((Coffee) currentItem).getSize().equals(((Coffee) item).getSize()) && (((Coffee) currentItem).getAddIns().equals(((Coffee) item).getAddIns()))){
-                    return i;
-                }
+            if (currentItem instanceof Coffee && item instanceof Coffee && (((Coffee) currentItem).compareAddIns((Coffee)item) == true)) {
+                return i;
             } else if (currentItem instanceof Donut && item instanceof Donut) {
                 if (((Donut) currentItem).getType().equals(((Donut) item).getType()) && (((Donut) currentItem).getFlavor().equals(((Donut) item).getFlavor()))) {
                     return i;

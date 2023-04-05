@@ -1,4 +1,5 @@
 package com.example.demo;
+import code.orderBasket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,10 @@ public class OrderBasketController implements Initializable {
     private TableColumn<MenuItem,Integer> quantityTable;
     @FXML
     private TableColumn<MenuItem,String> itemTable;
+    private orderBasket orderBasket;
+    public void setOrderBasket(orderBasket orderbasket) {
+        this.orderBasket = orderbasket;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
