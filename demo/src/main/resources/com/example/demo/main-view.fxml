@@ -10,7 +10,7 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Button mnemonicParsing="false">
+   <Button mnemonicParsing="false" onAction="#switchOrderBasket">
       <graphic>
          <ImageView fitHeight="73.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -26,7 +26,7 @@
                <Image url="@../../../Images/icons8-donut-64.png" />
             </image></ImageView>
       </graphic></Button>
-   <Button mnemonicParsing="false">
+   <Button mnemonicParsing="false" onAction="#switchCoffee">
       <graphic>
          <ImageView fitHeight="72.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
             <image>
