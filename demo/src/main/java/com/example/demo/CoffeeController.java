@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import code.Coffee;
+import code.Donut;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -46,14 +47,19 @@ public class CoffeeController {
     }
 
     @FXML
-    public void add(ActionEvent event){
+    public void addCoffee(ActionEvent event){
         if (size == null) {
             coffeeMessage.setText("Please select cup size.");
         } else if (quantityString == null) {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
             Coffee coffee = new Coffee("Coffee",size,addIns,quantity);
-
+            int quantity = Integer.parseInt(quantityInput.getText());
+            Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
+            donut.setQuantity(quantity);
+            orderBasket.add(donut);
+            subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+            donutMessage.setText("Your donut order has been placed successfully!");
         }
 
         caramel.setSelected(false);
@@ -66,6 +72,11 @@ public class CoffeeController {
 
         updateSubTotal();
 
+
+    }
+
+    @FXML
+    public void removeCoffee(ActionEvent event) {
 
     }
 

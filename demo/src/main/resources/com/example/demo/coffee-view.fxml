@@ -27,14 +27,14 @@
       <CheckBox fx:id="sweetCream" layoutX="93.0" layoutY="128.0" mnemonicParsing="false" text="Sweet Cream " />
       <CheckBox fx:id="mocha" layoutX="517.0" layoutY="128.0" mnemonicParsing="false" text="Mocha" />
       <CheckBox fx:id="irishCream" layoutX="319.0" layoutY="128.0" mnemonicParsing="false" text="Irish Cream" />
-      <Button layoutX="26.0" layoutY="305.0" mnemonicParsing="false" onAction="#add" text="Add" />
+      <Button layoutX="26.0" layoutY="305.0" mnemonicParsing="false" onAction="#addCoffee" text="Add" />
       <Label fx:id="coffeeMessage" layoutX="28.0" layoutY="235.0" prefHeight="18.0" prefWidth="458.0" />
       <Label layoutX="33.0" layoutY="70.0" prefHeight="18.0" prefWidth="38.0" text="Size:" />
       <Label layoutX="28.0" layoutY="128.0" text="Flavor:" />
       <Label layoutX="28.0" layoutY="191.0" text="Quantity:" />
       <Label layoutX="26.0" layoutY="253.0" text="Sub Total:" />
       <TextArea fx:id="subTotalCoffee" layoutX="96.0" layoutY="242.0" prefHeight="26.0" prefWidth="200.0" />
-      <Button layoutX="77.0" layoutY="305.0" mnemonicParsing="false" text="Remove" />
+      <Button layoutX="77.0" layoutY="305.0" mnemonicParsing="false" onAction="#removeCoffee" text="Remove" />
       <Button layoutX="147.0" layoutY="305.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>
