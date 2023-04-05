@@ -33,6 +33,9 @@ public class DonutController implements Initializable {
     private ListView <String> donutList;
     @FXML
     private TextField quantityInput;
+    @FXML
+    private Button addButton;
+
     private Order orderBasket;
     private int orderNum = 1;
     private int capacity = 4;
@@ -41,7 +44,6 @@ public class DonutController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
