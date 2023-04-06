@@ -40,9 +40,14 @@ public class OrderBasketController implements Initializable{
     public TableColumn<Coffee , String> sizeCol;
 
     private orderBasket orderBasket;
+    private Order basketOrder;
     public void setOrderBasket(orderBasket orderbasket) {
         System.out.println("called");
         this.orderBasket = orderbasket;
+    }
+
+    public void setOrder(Order order) {
+        this.basketOrder = order;
     }
 
     @Override
@@ -101,6 +106,18 @@ public class OrderBasketController implements Initializable{
         MainController main = loader.getController();
         main.setOrderBasket(orderBasket);
 
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void basketOrder(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("order-history-view.fxml"));
+        root = loader.load();
+        OrderHistoryController orderHistory = loader.getController();
+        orderHistory.setOrder(basketOrder);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

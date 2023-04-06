@@ -35,6 +35,7 @@ public class OrderHistoryController {
     @FXML
     private Label orderMessage;
     private Order Order;
+    private orderBasket orderbasket;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -42,9 +43,15 @@ public class OrderHistoryController {
     public void setOrder(Order order) {
         this.Order = order;
     }
+    public void setOrderBasket(orderBasket orderBasket) {
+        this.orderbasket = orderBasket;
+    }
 
+    private void addToOrder(ActionEvent event) {
 
-    public void createFile() {
+    }
+
+    public void createFile(ActionEvent event) {
         try {
             File file = new File("Order History.txt");
             if (file.createNewFile()) {

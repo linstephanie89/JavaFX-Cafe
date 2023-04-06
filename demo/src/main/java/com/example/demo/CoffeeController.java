@@ -2,6 +2,7 @@ package com.example.demo;
 
 import code.Coffee;
 import code.Donut;
+import code.Order;
 import code.orderBasket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class CoffeeController {
     private TextArea subTotalCoffee;
     private String size;
     private String quantityString;
-    //private String[] addIns;
+    private Order order;
     private orderBasket orderBasket;
     private int initialAddInSize = 0;
     private int quantity;
@@ -47,6 +48,10 @@ public class CoffeeController {
 
     public void setOrderBasket(orderBasket orderbasket) {
         orderBasket = orderbasket;
+    }
+
+    public void setOrder(Order Order) {
+        this.order = Order;
     }
 
     @FXML
@@ -149,6 +154,7 @@ public class CoffeeController {
 
         MainController main = loader.getController();
         main.setOrderBasket(orderBasket);
+        main.setOrder(order);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -163,6 +169,7 @@ public class CoffeeController {
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
         orderbasket.setOrderBasket(orderBasket);
+        orderbasket.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

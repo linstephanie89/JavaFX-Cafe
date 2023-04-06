@@ -12,6 +12,7 @@
             <TableColumn fx:id="orderPriceCol" prefWidth="88.79998168945315" text="Price" />
         </columns>
       </TableView>
+      <Button mnemonicParsing="false" text="Button" />
       <Button layoutX="14.0" layoutY="294.0" mnemonicParsing="false" onAction="#orderBackToMain" text="Back" />
       <Button layoutX="14.0" layoutY="333.0" mnemonicParsing="false" onAction="#writeToFile" text="Export" />
       <Label fx:id="orderMessage" layoutX="14.0" layoutY="368.0" text="Label" />

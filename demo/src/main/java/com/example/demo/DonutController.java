@@ -36,6 +36,7 @@ public class DonutController implements Initializable {
     @FXML
     private TextArea subTotal;
     private orderBasket orderBasket;
+    private Order order;
     private int orderNum = 1;
     private int capacity = 4;
     private String[] donutTypes = {"Yeast", "Cake", "Donut Hole"};
@@ -46,6 +47,10 @@ public class DonutController implements Initializable {
 
     public void setOrderBasket(orderBasket orderbasket) {
         this.orderBasket = orderbasket;
+    }
+
+    public void setOrder(Order Order) {
+        this.order = Order;
     }
 
     @Override

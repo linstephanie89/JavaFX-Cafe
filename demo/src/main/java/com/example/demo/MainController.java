@@ -35,6 +35,7 @@ public class MainController {
         root = loader.load();
         DonutController Donut = loader.getController();
         Donut.setOrderBasket(orderbasket);
+        Donut.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -47,6 +48,7 @@ public class MainController {
         root = loader.load();
         CoffeeController Coffee = loader.getController();
         Coffee.setOrderBasket(orderbasket);
+        Coffee.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -59,6 +61,7 @@ public class MainController {
         root = loader.load();
         OrderBasketController orderBasket = loader.getController();
         orderBasket.setOrderBasket(orderbasket);
+        orderBasket.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -71,6 +74,7 @@ public class MainController {
         root = loader.load();
         OrderHistoryController orderHistory = loader.getController();
         orderHistory.setOrder(order);
+        orderHistory.setOrderBasket(orderbasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
