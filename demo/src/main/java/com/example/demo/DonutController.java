@@ -144,6 +144,21 @@ public class DonutController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
+//        OrderBasketController controller = new OrderBasketController();
+//        controller.setOrderBasket(orderBasket);
+//        root = loader.load();
+//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//        root = (Parent)loader.load();
+//        OrderBasketController orderbasket = loader.<OrderBasketController>getController();
+//        orderbasket.setOrderBasket(orderBasket);
+//        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     @FXML

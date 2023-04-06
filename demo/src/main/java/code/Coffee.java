@@ -2,7 +2,8 @@ package code;
 
 public class Coffee extends MenuItem {
 
-    //private String cupSize;
+    private String cupSize;
+    private String addInString;
     private String[] addIns;
     private double price;
     private double addInPrice = 0.30;
@@ -14,9 +15,9 @@ public class Coffee extends MenuItem {
 
     public Coffee(String name, String cupSize, String[] addIns, int quantity){
         super(name, quantity);
-        super.setSize(cupSize);
+        this.cupSize = cupSize;
         this.addIns = addIns;
-        super.setAddIns(addInToString(addIns));
+        this.addInString = addInToString(addIns);
         if(cupSize.equals("Short")){
             this.price = SHORT_PRICE;
         }else if(cupSize.equals("Tall")){
@@ -39,26 +40,25 @@ public class Coffee extends MenuItem {
 
     @Override
     public int getQuantity() { return this.quantity;}
-    public String getSize() {
-        return super.getSize();
+    public String getCupSize() {
+        return this.cupSize;
     }
 
     public String[] getAddIns() {
         return this.addIns;
     }
 
+    public String getAddInString() {
+        return this.addInString;
+    }
+
     public boolean compareAddIns(Coffee coffee) {
-        String newAddIns = coffee.getAddInStrings();
-        String currAddIns = this.getAddInStrings();
-//        String[] newAddIns = coffee.getAddIns();
-//        String[] currAddIns = super.getAddIns();
-//        for (int i = 0; i < 5; i++) {
-//            if (newAddIns[i] != currAddIns[i]) {
-//                return false;
-//            }
-//        }
-        if (newAddIns.equals(currAddIns)) {
-            return true;
+        String[] newAddIns = coffee.getAddIns();
+        String[] currAddIns = this.addIns;
+        for (int i = 0; i < 5; i++) {
+            if (newAddIns[i] != currAddIns[i]) {
+                return false;
+            }
         }
         return false;
     }
@@ -74,7 +74,7 @@ public class Coffee extends MenuItem {
 
     @Override
     public String toString() {
-        String returnString= this.getSize() + " coffee with: ";
+        String returnString= this.getCupSize() + " coffee with: ";
         for (int i = 0; i < 5; i++) {
             if (addIns[i] != null) {
                 returnString += addIns[i] + ", ";

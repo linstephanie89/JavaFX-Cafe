@@ -98,7 +98,12 @@ public class orderBasket {
     }
 
     public ArrayList<MenuItem> orderBasketList() {
-        ArrayList<MenuItem> orderBasketList = new ArrayList<MenuItem>(Arrays.asList(orderBasket));
+        MenuItem[] temporaryList = new MenuItem[size];
+        for (int i = 0; i < size; i++) {
+            MenuItem menuitem = (MenuItem) orderBasket[i];
+            temporaryList[i] = menuitem;
+        }
+        ArrayList<MenuItem> orderBasketList = new ArrayList<MenuItem>(Arrays.asList(temporaryList));
         return orderBasketList;
     }
 
