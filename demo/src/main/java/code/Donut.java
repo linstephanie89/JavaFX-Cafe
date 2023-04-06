@@ -35,5 +35,11 @@ public class Donut extends MenuItem{
     }
     @Override
     public int getQuantity() { return quantity;}
+    @Override
+    public String toString() {
+        String returnString= this.getType() + " donut, " + this.getType()
+                + "flavor, quantity: "+ Integer.toString(this.quantity);
+        return returnString;
+    }
 
 }

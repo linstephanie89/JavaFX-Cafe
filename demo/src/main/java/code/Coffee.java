@@ -65,6 +65,18 @@ public class Coffee extends MenuItem {
         return this.price * (double) this.quantity;
     }
 
+    @Override
+    public String toString() {
+        String returnString= this.getSize() + " coffee with: ";
+        for (int i = 0; i < 5; i++) {
+            if (addIns[i] != null) {
+                returnString += addIns[i] + ", ";
+            }
+        }
+        returnString += "quantity: " + Integer.toString(this.quantity);
+        return returnString;
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package code;
 
+
 public class Order {
 
     private int orderNumber;
@@ -9,7 +10,7 @@ public class Order {
     private int EMPTY = 0;
     private int GrowthRate = 4;
 
-    public Order(orderBasket[] Order) {
+    public Order() {
         this.Order = new orderBasket[InitialCapacity];
         this.size = EMPTY;
     }
@@ -22,6 +23,14 @@ public class Order {
         }
     }
 
+    public int find(orderBasket orderBasket) {
+        for (int i = 0; i < size; i++) {
+            if(Order[i].equals(orderBasket)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     public boolean add(orderBasket orderBasket) {
         if (size == Order.length) {
             grow();
@@ -31,7 +40,22 @@ public class Order {
         return true;
     }
 
+    public boolean remove(orderBasket orderBasket) {
+        if (find(orderBasket) == -1) {
+            return false;
+        } else {
+            Order[find(orderBasket)] = null;
+        }
+        return true;
+    }
 
+    public int getSize() {
+        return this.size;
+    }
+
+    public orderBasket getOrderBasket(int index) {
+        return Order[index];
+    }
 
 
 
