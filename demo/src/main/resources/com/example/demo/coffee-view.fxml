@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CoffeeController">
@@ -36,5 +37,10 @@
       <TextArea fx:id="subTotalCoffee" layoutX="91.0" layoutY="270.0" prefHeight="26.0" prefWidth="200.0" />
       <Button layoutX="73.0" layoutY="324.0" mnemonicParsing="false" onAction="#removeCoffee" text="Remove" />
       <Button fx:id="coffeeBackButton" layoutX="147.0" layoutY="324.0" mnemonicParsing="false" onAction="#backToMainCoffee" text="Back" />
+      <Button layoutX="218.0" layoutY="324.0" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

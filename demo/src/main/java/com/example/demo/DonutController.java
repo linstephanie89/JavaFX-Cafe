@@ -135,12 +135,12 @@ public class DonutController implements Initializable {
     }
     @FXML
     public void viewOrderBasket(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("order-view.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("your-fxml-file.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("order-view.fxml"));
+        root = loader.load();
+        OrderBasketController orderbasket = loader.getController();
+        orderbasket.setOrderBasket(orderBasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        OrderBasketController controller = loader.getController();
-        controller.initialize();
-        //OrderBasketController.showBasketItems((ObservableList<javafx.scene.control.MenuItem>) orderBasket);
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

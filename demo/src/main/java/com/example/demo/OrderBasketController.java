@@ -49,11 +49,7 @@ public class OrderBasketController implements Initializable{
     }
 
     public void showBasketItems(List<MenuItem> items){
-        orderBasket = new orderBasket();
-        for(MenuItem item: items){
-           orderBasket.add(item.getText(), item.getId(), item.getParentPopup().getScene().getRoot().toString());
-        }
-        orderBasketTable.setItems(orderBasketTable.getItems());
+
     }
 
 }
