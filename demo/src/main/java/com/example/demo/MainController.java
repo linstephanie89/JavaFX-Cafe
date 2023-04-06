@@ -17,11 +17,15 @@ public class MainController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    protected Order order;
+    private Order order;
     private orderBasket orderbasket = new orderBasket();
 
     public void setOrderBasket(orderBasket orderBasket) {
         this.orderbasket = orderBasket;
+    }
+
+    public void setOrder(Order Order) {
+        this.order = Order;
     }
 
     @FXML
@@ -65,8 +69,8 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainController.class.getResource("order-history-view.fxml"));
         root = loader.load();
-        OrderBasketController orderBasket = loader.getController();
-        orderBasket.setOrderBasket(orderbasket);
+        OrderHistoryController orderHistory = loader.getController();
+        orderHistory.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

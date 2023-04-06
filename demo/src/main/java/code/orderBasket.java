@@ -1,6 +1,7 @@
 package code;
 
 import javafx.scene.control.Menu;
+import java.util.*;
 
 public class orderBasket {
     private MenuItem[] orderBasket;
@@ -94,6 +95,11 @@ public class orderBasket {
             returnString += orderBasket[i].toString()+"\n";
         }
         return returnString;
+    }
+
+    public ArrayList<MenuItem> orderBasketList() {
+        ArrayList<MenuItem> orderBasketList = new ArrayList<MenuItem>(Arrays.asList(orderBasket));
+        return orderBasketList;
     }
 
 }

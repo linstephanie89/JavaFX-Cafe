@@ -8,7 +8,7 @@ public class Donut extends MenuItem{
     private double CAKE_PRICE = 1.79;
     private double DONUT_HOLE_PRICE = 0.39;
     public Donut(String name, String type, String flavor, int quantity){
-        super(name, quantity);
+        super(type + " " + name + ", " + flavor + " flavor", quantity);
         this.type = type;
         this.flavor = flavor;
         if(type.equals("Yeast")){
@@ -37,8 +37,8 @@ public class Donut extends MenuItem{
     public int getQuantity() { return quantity;}
     @Override
     public String toString() {
-        String returnString= this.getType() + " donut, " + this.getType()
-                + "flavor, quantity: "+ Integer.toString(this.quantity);
+        String returnString= this.getType() + " donut, " + this.getFlavor()
+                + " flavor, quantity: "+ Integer.toString(this.quantity);
         return returnString;
     }
 

@@ -35,6 +35,13 @@ public class OrderHistoryController {
     @FXML
     private Label orderMessage;
     private Order Order;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    public void setOrder(Order order) {
+        this.Order = order;
+    }
 
 
     public void createFile() {
@@ -52,7 +59,7 @@ public class OrderHistoryController {
     }
 
     @FXML
-    public void writeToFile() {
+    public void writeToFile(ActionEvent event) {
         createFile();
         try{
             FileWriter writer = new FileWriter("Order History.txt");
@@ -70,6 +77,21 @@ public class OrderHistoryController {
             orderMessage.setText("Error: Can't write to file");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void orderBackToMain(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        root = loader.load();
+
+        MainController main = loader.getController();
+        main.setOrder(Order);
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
