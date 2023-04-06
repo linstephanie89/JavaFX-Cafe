@@ -1,6 +1,9 @@
 package code;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Order {
 
     private int orderNumber;
@@ -36,6 +39,7 @@ public class Order {
             grow();
         }
         Order[size] = orderBasket;
+        this.orderNumber = size + 1;
         size++;
         return true;
     }
@@ -55,6 +59,11 @@ public class Order {
 
     public orderBasket getOrderBasket(int index) {
         return Order[index];
+    }
+
+    public ArrayList<orderBasket> orderList() {
+        ArrayList<orderBasket> orderList = new ArrayList<orderBasket>(Arrays.asList(Order));
+        return orderList;
     }
 
 

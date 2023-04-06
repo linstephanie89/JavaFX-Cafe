@@ -1,6 +1,9 @@
 package com.example.demo;
 import code.*;
 
+import code.MenuItem;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,11 +50,18 @@ public class OrderHistoryController {
         this.orderbasket = orderBasket;
     }
 
-    private void addToOrder(ActionEvent event) {
+    @FXML
+    private void viewOrder(ActionEvent event) {
+        this.Order.add(orderbasket);
+        orderNumberCol.setCellValueFactory(cellData -> {
+            orderBasket rowValue = cellData.getValue();
+            int orderNum = rowValue.get();
+            return new SimpleIntegerProperty(quantity).asObject();
+        });
 
     }
 
-    public void createFile(ActionEvent event) {
+    public void createFile() {
         try {
             File file = new File("Order History.txt");
             if (file.createNewFile()) {
