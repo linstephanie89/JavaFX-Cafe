@@ -30,15 +30,15 @@ import java.util.ResourceBundle;
 public class OrderHistoryController {
 
     @FXML
-    private TableColumn<orderBasket, String> orderNumberCol;
+    private TableColumn<Order, String> orderNumberCol;
     @FXML
-    private TableColumn<orderBasket, String> orderItemCol;
+    private TableColumn<Order, String> orderItemCol;
     @FXML
-    private TableColumn<orderBasket, String> orderPriceCol;
+    private TableColumn<Order, String> orderPriceCol;
     @FXML
     private Label orderMessage;
     private Order Order;
-    private orderBasket orderbasket;
+    //private orderBasket orderbasket;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -46,17 +46,17 @@ public class OrderHistoryController {
     public void setOrder(Order order) {
         this.Order = order;
     }
-    public void setOrderBasket(orderBasket orderBasket) {
-        this.orderbasket = orderBasket;
-    }
+//    public void setOrderBasket(orderBasket orderBasket) {
+//        this.orderbasket = orderBasket;
+//    }
 
     @FXML
     private void viewOrder(ActionEvent event) {
-        this.Order.add(orderbasket);
+        //this.Order.add(orderbasket);
         orderNumberCol.setCellValueFactory(cellData -> {
-            orderBasket rowValue = cellData.getValue();
-            int orderNum = rowValue.get();
-            return new SimpleIntegerProperty(quantity).asObject();
+            Order rowValue = cellData.getValue();
+            int orderNum = rowValue.getOrderNumber();
+            return new SimpleIntegerProperty(orderNum).asObject().asString();
         });
 
     }
@@ -75,26 +75,26 @@ public class OrderHistoryController {
         }
     }
 
-    @FXML
-    public void writeToFile(ActionEvent event) {
-        createFile();
-        try{
-            FileWriter writer = new FileWriter("Order History.txt");
-            for (int i = 0; i < Order.getSize(); i++) {
-                writer.write("Order number " + Integer.toString(i) + ": ");
-                orderBasket orderBasket = Order.getOrderBasket(i);
-                if (orderBasket == null) {
-                    writer.write("Order canceled.\n");
-                } else {
-                    writer.write(orderBasket.toString());
-                }
-            }
-            writer.close();
-        } catch (IOException e) {
-            orderMessage.setText("Error: Can't write to file");
-            e.printStackTrace();
-        }
-    }
+//    @FXML
+//    public void writeToFile(ActionEvent event) {
+//        createFile();
+//        try{
+//            FileWriter writer = new FileWriter("Order History.txt");
+//            for (int i = 0; i < Order.getSize(); i++) {
+//                writer.write("Order number " + Integer.toString(i) + ": ");
+//                orderBasket orderBasket = Order.getOrderBasket(i);
+//                if (orderBasket == null) {
+//                    writer.write("Order canceled.\n");
+//                } else {
+//                    writer.write(orderBasket.toString());
+//                }
+//            }
+//            writer.close();
+//        } catch (IOException e) {
+//            orderMessage.setText("Error: Can't write to file");
+//            e.printStackTrace();
+//        }
+//    }
 
     @FXML
     public void orderBackToMain(ActionEvent event) throws IOException{

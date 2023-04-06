@@ -3,7 +3,7 @@ package code;
 public abstract class MenuItem {
     public String name;
     public int quantity;
-    public MenuItem(String name, int quantity){
+    public MenuItem( String name, int quantity){
         this.name = name;
         this.quantity = quantity;
     }
@@ -16,6 +16,5 @@ public abstract class MenuItem {
     public void setQuantity(int newQuantity) {
         this.quantity = newQuantity;
     }
-
 
 }

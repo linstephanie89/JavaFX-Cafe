@@ -2,6 +2,7 @@ package com.example.demo;
 import code.*;
 import code.MenuItem;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -41,10 +42,11 @@ public class OrderBasketController implements Initializable{
 
     //private orderBasket orderBasket;
     private Order basketOrder;
-    // public void setOrderBasket(orderBasket orderbasket) {
-    //     System.out.println("called");
-    //     this.orderBasket = orderbasket;
-    // }
+    //private Order order;
+//     public void setOrderBasket(orderBasket orderbasket) {
+//         System.out.println("called");
+//         this.orderBasket = orderbasket;
+//     }
 
     public void setOrder(Order order) {
         this.basketOrder = order;
@@ -52,23 +54,37 @@ public class OrderBasketController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        //populate();
+        basketOrder=new Order();
+        setOrder(basketOrder);
     }
-
+    @FXML
     public void populate() {
-        ArrayList<code.MenuItem> orderList = this.order.orderList();
-        ObservableList<code.MenuItem> list = FXCollections.<code.MenuItem>observableArrayList(orderList);
+        ArrayList<MenuItem> orderList = this.basketOrder.OrderList();
+        ObservableList<MenuItem> list = FXCollections.<MenuItem>observableArrayList(orderList);
         System.out.println(list);
         orderBasketTable.setEditable(true);
         quantityCol.setCellValueFactory(cellData -> {
             MenuItem rowValue = cellData.getValue();
-            int quantity = rowValue.getQuantity();
-            return new SimpleIntegerProperty(quantity).asObject();
+            if(rowValue!=null){
+                String quantityString = String.valueOf(rowValue.getQuantity());
+                IntegerProperty quantity = new SimpleIntegerProperty(Integer.parseInt(quantityString));
+                return quantity.asObject();
+            }else{
+                return null;
+            }
+//            int quantity = rowValue.getQuantity();
+//            return new SimpleIntegerProperty(quantity).asObject();
         });
         itemCol.setCellValueFactory(cellData -> {
             MenuItem rowValue = cellData.getValue();
-            String name = rowValue.getName();
-            return new SimpleStringProperty(name);
+            if(rowValue!=null){
+                return new SimpleStringProperty(rowValue.getName());
+            }else{
+                return new SimpleStringProperty("");
+            }
+//            String name = rowValue.getName();
+//            return new SimpleStringProperty(name);
         });
         addInCol.setCellValueFactory(cellData -> {
             MenuItem menuItem = cellData.getValue();
@@ -104,7 +120,7 @@ public class OrderBasketController implements Initializable{
         root = loader.load();
 
         MainController main = loader.getController();
-        main.setOrder(order);
+        main.setOrder(basketOrder);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

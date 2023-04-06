@@ -101,8 +101,8 @@ public class CoffeeController {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
             Coffee coffee = createCoffee();
-            Order.add(coffee);
-            double subTotal = Order.getTotalPrice();
+            order.add(coffee);
+            double subTotal = order.getTotalPrice();
             subTotalCoffee.setText(String.format("$%.2f", subTotal));
             coffeeMessage.setText("Your coffee order has been placed successfully!");
         }
@@ -127,7 +127,7 @@ public class CoffeeController {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
             Coffee coffee = createCoffee();
-            Coffee currentItem = (Coffee) Order.returnItem(coffee);
+            Coffee currentItem = (Coffee) order.returnItem(coffee);
             if (currentItem == null) {
                 coffeeMessage.setText("Failed to remove item - no matching order");
             }
@@ -135,8 +135,8 @@ public class CoffeeController {
                 if (currentItem.getQuantity() < quantity) {
                     coffeeMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
                 } else {
-                    Order.remove(coffee);
-                    subTotalCoffee.setText(String.format("$%.2f", Order.getTotalPrice()));
+                    order.remove(coffee);
+                    subTotalCoffee.setText(String.format("$%.2f", order.getTotalPrice()));
                     coffeeMessage.setText("Your coffee order has been removed successfully!");
                 }
 

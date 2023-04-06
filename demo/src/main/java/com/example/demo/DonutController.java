@@ -102,7 +102,7 @@ public class DonutController implements Initializable {
             int quantity = Integer.parseInt(quantityInput.getText());
             Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
             //donut.setQuantity(quantity);
-            order.add(donut);
+            this.order.add(donut);
             subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
             donutMessage.setText("Your donut order has been placed successfully!");
         }
