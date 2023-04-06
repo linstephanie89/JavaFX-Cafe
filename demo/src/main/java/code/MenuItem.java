@@ -12,6 +12,7 @@ public abstract class MenuItem {
     }
     public abstract double itemPrice();
     public abstract int getQuantity();
+    public abstract String toString();
     public void setQuantity(int newQuantity) {
         this.quantity = newQuantity;
     }

@@ -88,5 +88,12 @@ public class orderBasket {
     public double getTotalPrice() {
         return this.totalPrice;
     }
+    public String toString() {
+        String returnString = "";
+        for (int i = 0; i < size; i++) {
+            returnString += orderBasket[i].toString()+"\n";
+        }
+        return returnString;
+    }
 
 }

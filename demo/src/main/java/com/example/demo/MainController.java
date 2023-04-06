@@ -62,7 +62,11 @@ public class MainController {
     }
     @FXML
     public void switchOrderHistory(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("donut-view.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("order-history-view.fxml"));
+        root = loader.load();
+        OrderBasketController orderBasket = loader.getController();
+        orderBasket.setOrderBasket(orderbasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
