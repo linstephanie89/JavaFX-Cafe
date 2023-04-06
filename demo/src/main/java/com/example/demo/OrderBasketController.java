@@ -39,12 +39,12 @@ public class OrderBasketController implements Initializable{
     @FXML
     public TableColumn<Coffee , String> sizeCol;
 
-    private orderBasket orderBasket;
+    //private orderBasket orderBasket;
     private Order basketOrder;
-    public void setOrderBasket(orderBasket orderbasket) {
-        System.out.println("called");
-        this.orderBasket = orderbasket;
-    }
+    // public void setOrderBasket(orderBasket orderbasket) {
+    //     System.out.println("called");
+    //     this.orderBasket = orderbasket;
+    // }
 
     public void setOrder(Order order) {
         this.basketOrder = order;
@@ -56,7 +56,7 @@ public class OrderBasketController implements Initializable{
     }
 
     public void populate() {
-        ArrayList<code.MenuItem> orderList = this.orderBasket.orderBasketList();
+        ArrayList<code.MenuItem> orderList = this.order.orderList();
         ObservableList<code.MenuItem> list = FXCollections.<code.MenuItem>observableArrayList(orderList);
         System.out.println(list);
         orderBasketTable.setEditable(true);
@@ -104,7 +104,7 @@ public class OrderBasketController implements Initializable{
         root = loader.load();
 
         MainController main = loader.getController();
-        main.setOrderBasket(orderBasket);
+        main.setOrder(order);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

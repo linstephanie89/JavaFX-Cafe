@@ -3,7 +3,6 @@ package com.example.demo;
 import code.Coffee;
 import code.Donut;
 import code.Order;
-import code.orderBasket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +36,6 @@ public class CoffeeController {
     private String size;
     private String quantityString;
     private Order order;
-    private orderBasket orderBasket;
     private int initialAddInSize = 0;
     private int quantity;
     private int CAPACITY = 5;
@@ -46,9 +44,9 @@ public class CoffeeController {
     private Parent root;
 
 
-    public void setOrderBasket(orderBasket orderbasket) {
-        orderBasket = orderbasket;
-    }
+    // public void setOrderBasket(orderBasket orderbasket) {
+    //     orderBasket = orderbasket;
+    // }
 
     public void setOrder(Order Order) {
         this.order = Order;
@@ -103,8 +101,8 @@ public class CoffeeController {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
             Coffee coffee = createCoffee();
-            orderBasket.add(coffee);
-            double subTotal = orderBasket.getTotalPrice();
+            Order.add(coffee);
+            double subTotal = Order.getTotalPrice();
             subTotalCoffee.setText(String.format("$%.2f", subTotal));
             coffeeMessage.setText("Your coffee order has been placed successfully!");
         }
@@ -129,7 +127,7 @@ public class CoffeeController {
             coffeeMessage.setText("Please enter a quantity.");
         } else {
             Coffee coffee = createCoffee();
-            Coffee currentItem = (Coffee) orderBasket.returnItem(coffee);
+            Coffee currentItem = (Coffee) Order.returnItem(coffee);
             if (currentItem == null) {
                 coffeeMessage.setText("Failed to remove item - no matching order");
             }
@@ -137,8 +135,8 @@ public class CoffeeController {
                 if (currentItem.getQuantity() < quantity) {
                     coffeeMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
                 } else {
-                    orderBasket.remove(coffee);
-                    subTotalCoffee.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+                    Order.remove(coffee);
+                    subTotalCoffee.setText(String.format("$%.2f", Order.getTotalPrice()));
                     coffeeMessage.setText("Your coffee order has been removed successfully!");
                 }
 
@@ -153,7 +151,7 @@ public class CoffeeController {
         root = loader.load();
 
         MainController main = loader.getController();
-        main.setOrderBasket(orderBasket);
+        //main.setOrderBasket(orderBasket);
         main.setOrder(order);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -168,7 +166,7 @@ public class CoffeeController {
         loader.setLocation(MainController.class.getResource("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
-        orderbasket.setOrderBasket(orderBasket);
+        //orderbasket.setOrderBasket(orderBasket);
         orderbasket.setOrder(order);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

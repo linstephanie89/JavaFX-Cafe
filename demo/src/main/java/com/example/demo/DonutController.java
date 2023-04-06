@@ -35,7 +35,7 @@ public class DonutController implements Initializable {
     private Label donutMessage;
     @FXML
     private TextArea subTotal;
-    private orderBasket orderBasket;
+    //private orderBasket orderBasket;
     private Order order;
     private int orderNum = 1;
     private int capacity = 4;
@@ -45,9 +45,9 @@ public class DonutController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    public void setOrderBasket(orderBasket orderbasket) {
-        this.orderBasket = orderbasket;
-    }
+    // public void setOrderBasket(orderBasket orderbasket) {
+    //     this.orderBasket = orderbasket;
+    // }
 
     public void setOrder(Order Order) {
         this.order = Order;
@@ -102,8 +102,8 @@ public class DonutController implements Initializable {
             int quantity = Integer.parseInt(quantityInput.getText());
             Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
             //donut.setQuantity(quantity);
-            orderBasket.add(donut);
-            subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+            order.add(donut);
+            subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
             donutMessage.setText("Your donut order has been placed successfully!");
         }
     }
@@ -123,7 +123,7 @@ public class DonutController implements Initializable {
             int quantity = Integer.parseInt(quantityInput.getText());
             Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
             //donut.setQuantity(quantity);
-            Donut currentItem = (Donut) orderBasket.returnItem(donut);
+            Donut currentItem = (Donut) order.returnItem(donut);
             if (currentItem == null) {
                 donutMessage.setText("Failed to remove item - no matching order");
             }
@@ -131,8 +131,8 @@ public class DonutController implements Initializable {
                 if (currentItem.getQuantity() < quantity) {
                     donutMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
                 } else {
-                    orderBasket.remove(donut);
-                    subTotal.setText(String.format("$%.2f", orderBasket.getTotalPrice()));
+                    order.remove(donut);
+                    subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
                     donutMessage.setText("Your donut order has been removed successfully!");;
                 }
             }
@@ -144,7 +144,7 @@ public class DonutController implements Initializable {
         loader.setLocation(MainController.class.getResource("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
-        orderbasket.setOrderBasket(orderBasket);
+        //orderbasket.setOrderBasket(orderBasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -173,7 +173,7 @@ public class DonutController implements Initializable {
         root = loader.load();
 
         MainController main = loader.getController();
-        main.setOrderBasket(orderBasket);
+        main.setOrder(order);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
