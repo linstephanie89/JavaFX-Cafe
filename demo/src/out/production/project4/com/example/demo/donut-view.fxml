@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="511.0" prefWidth="612.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.DonutController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <ImageView fx:id="donutImage" fitHeight="115.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" />
+      <ListView fx:id="donutList" prefHeight="131.0" prefWidth="443.0" />
+      <AnchorPane prefHeight="176.0" prefWidth="572.0">
+         <children>
+            <Button fx:id="addButton" layoutX="405.0" layoutY="47.0" mnemonicParsing="false" onAction="#addDonut" text="Add" />
+            <Button fx:id="removeButton" layoutX="452.0" layoutY="48.0" mnemonicParsing="false" onAction="#removeDonut" text="Remove" />
+            <Label layoutY="104.0" text="Sub Total: " />
+            <TextArea fx:id="subTotal" layoutX="69.0" layoutY="92.0" prefHeight="26.0" prefWidth="237.0" />
+            <Label layoutY="52.0" text="Quantity: " />
+            <ComboBox fx:id="donutComboBox" layoutX="188.0" layoutY="47.0" prefWidth="150.0" />
+            <TextField fx:id="quantityInput" layoutX="69.0" layoutY="47.0" prefHeight="26.0" prefWidth="53.0" />
+            <Button layoutX="444.0" layoutY="99.0" mnemonicParsing="false" onAction="#viewOrderBasket">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/icons8-shopping-cart-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="backButton" layoutX="517.0" layoutY="47.0" mnemonicParsing="false" onAction="#backToMainDonut" text="Back" />
+            <Label fx:id="donutMessage" layoutY="14.0" prefHeight="18.0" prefWidth="371.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
