@@ -85,7 +85,6 @@ public class orderBasket {
         }
     }
 
-
     public double getTotalPrice() {
         return this.totalPrice;
     }

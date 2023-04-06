@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -135,8 +136,11 @@ public class DonutController implements Initializable {
     @FXML
     public void viewOrderBasket(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("order-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("your-fxml-file.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        OrderBasketController.showBasketItems((ObservableList<javafx.scene.control.MenuItem>) orderBasket);
+        OrderBasketController controller = loader.getController();
+        controller.initialize();
+        //OrderBasketController.showBasketItems((ObservableList<javafx.scene.control.MenuItem>) orderBasket);
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
