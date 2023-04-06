@@ -10,7 +10,7 @@ public class Order {
     private int EMPTY = 0;
     private int GrowthRate = 4;
     private double totalPrice;
-    private int orderNumber; 
+    private int orderNumber;
 
     public Order() {
         this.Order = new MenuItem[InitialCapacity];
@@ -109,11 +109,11 @@ public class Order {
     }
 
     public int getOrderNumber() {
-        return this.orderNumber; 
+        return this.orderNumber;
     }
 
     public void setOrderNumber(int number) {
-        this.orderNumber = number; 
+        this.orderNumber = number;
     }
 
 }

@@ -144,6 +144,7 @@ public class DonutController implements Initializable {
         loader.setLocation(MainController.class.getResource("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
+        orderbasket.setOrder(order);
         //orderbasket.setOrderBasket(orderBasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
