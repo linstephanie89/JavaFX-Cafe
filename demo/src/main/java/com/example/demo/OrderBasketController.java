@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-
+/**
+ * Controller class for the Order Basket View that allows the user to view their order basket.
+ * @author Stephanie Lin, Hyeseo Lee
+ */
 public class OrderBasketController implements Initializable{
     private Stage stage;
     private Scene scene;
@@ -47,25 +50,35 @@ public class OrderBasketController implements Initializable{
     private Text salesTaxText;
     @FXML
     private Text TotalText;
-
-    //private orderBasket orderBasket;
     private Order basketOrder;
-    //private Order order;
-//     public void setOrderBasket(orderBasket orderbasket) {
-//         System.out.println("called");
-//         this.orderBasket = orderbasket;
-//     }
 
+    /**
+     * setter method that assigns the passed in Order to the order variable in this class.
+     * @param order representing the current order basket that user is interacting with.
+     */
     public void setOrder(Order order) {
         this.basketOrder = order;
     }
 
+    /**
+     *initializes the GUI interface and the basket Order.
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //populate();
         basketOrder=new Order();
         setOrder(basketOrder);
     }
+
+    /**
+     * fills the TableView in GUI with the user's order basket items, add ins, size, subtotal, tax, and total.
+     */
     @FXML
     public void populate() {
         ArrayList<MenuItem> orderList = this.basketOrder.OrderList();
@@ -81,8 +94,6 @@ public class OrderBasketController implements Initializable{
             }else{
                 return null;
             }
-//            int quantity = rowValue.getQuantity();
-//            return new SimpleIntegerProperty(quantity).asObject();
         });
         itemCol.setCellValueFactory(cellData -> {
             MenuItem rowValue = cellData.getValue();
@@ -91,8 +102,6 @@ public class OrderBasketController implements Initializable{
             }else{
                 return new SimpleStringProperty("");
             }
-//            String name = rowValue.getName();
-//            return new SimpleStringProperty(name);
         });
         addInCol.setCellValueFactory(cellData -> {
             MenuItem menuItem = cellData.getValue();
@@ -114,7 +123,6 @@ public class OrderBasketController implements Initializable{
                 return null;
             }
         });
-
         orderBasketTable.setItems(list);
 
         double subTotal = basketOrder.getTotalPrice();
@@ -126,6 +134,11 @@ public class OrderBasketController implements Initializable{
         TotalText.setText(String.format("$%.2f",total));
     }
 
+    /**
+     * switches the scene from Order Basket View to the Main View.
+     * @param event triggered when the use selects the return icon.
+     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     */
     @FXML
     private void basketBackToMain(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -140,7 +153,11 @@ public class OrderBasketController implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * switches the scene from Order Basket View to the Order History View.
+     * @param event triggered when the use selects the order button.
+     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     */
     public void basketOrder(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainController.class.getResource("order-history-view.fxml"));
@@ -153,12 +170,18 @@ public class OrderBasketController implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * allows the user to remove an item from their order basket.
+     * @param event triggered when the user selects the remove button.
+     */
     @FXML
     public void removeItem(ActionEvent event){
         MenuItem selectedItem = orderBasketTable.getSelectionModel().getSelectedItem();
         if(selectedItem != null){
             basketOrder.remove(selectedItem);
             orderBasketTable.getItems().remove(selectedItem);
+            populate();
         }
     }
 

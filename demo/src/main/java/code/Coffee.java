@@ -18,11 +18,11 @@ public class Coffee extends MenuItem {
     private double NONE = 0;
 
     /**
-     * Coffee constructor that is assigning each component of the Coffee class
-     * @param name
-     * @param cupSize
-     * @param addIns
-     * @param quantity
+     * Coffee constructor that is assigning each component of the Coffee class.
+     * @param name represents the MenuItem, in this case Coffee.
+     * @param cupSize represents the coffee's cup size in short, tall, grande, or venti.
+     * @param addIns represents the user's selected add-ins.
+     * @param quantity represents the number of coffees ordered.
      */
     public Coffee(String name, String cupSize, String[] addIns, int quantity){
         super(name, quantity);
@@ -48,21 +48,43 @@ public class Coffee extends MenuItem {
         }
     }
 
-
+    /**
+     * getter method for quantity of coffee ordered.
+     * @return int value quantity of coffees ordered.
+     */
     @Override
     public int getQuantity() { return this.quantity;}
+
+    /**
+     * getter method for the coffee cup size.
+     * @return String representation of the coffee cup size.
+     */
     public String getCupSize() {
         return this.cupSize;
     }
 
+    /**
+     * getter method for the user's selection of add ins.
+     * @return an array of the user's selection of add ins.
+     */
     public String[] getAddIns() {
         return this.addIns;
     }
 
+    /**
+     * getter method for the user's selection of add ins.
+     * @return String representation of user's selection of add ins.
+     */
     public String getAddInString() {
         return this.addInString;
     }
 
+    /**
+     * comparison method for Coffee object's add ins.
+     * @param coffee Coffee object that will be compared with.
+     * @return boolean value, true if the add ins match with the current add ins
+     * of current Coffee object, false otherwise.
+     */
     public boolean compareAddIns(Coffee coffee) {
         String[] newAddIns = coffee.getAddIns();
         String[] currAddIns = this.addIns;
@@ -74,15 +96,20 @@ public class Coffee extends MenuItem {
         return false;
     }
 
-//    public void setQuantity(int newQuantity) {
-//        this.quantity = newQuantity;
-//    }
-
+    /**
+     * calculates the item's price with the number of items ordered.
+     * @return double of the item's price.
+     */
     @Override
     public double itemPrice(){
         return this.price * (double) this.quantity;
     }
 
+    /**
+     * toString method that converts the coffee's cup size, add ins, and
+     * quantity into one string.
+     * @return String representtion of the coffee's cup size, add ins, and quantity.
+     */
     @Override
     public String toString() {
         String returnString= this.getCupSize() + " coffee with: ";
@@ -95,6 +122,11 @@ public class Coffee extends MenuItem {
         return returnString;
     }
 
+    /**
+     * Converts an array of the user's add ins to a String representation.
+     * @param addIns is the String array that holds the user's selection of add ins.
+     * @return String representation of the user's selection of add ins.
+     */
     public String addInToString(String[] addIns) {
         String returnString = "";
         for (int i = 0; i < 5; i++) {

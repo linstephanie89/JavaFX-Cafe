@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for the Coffee View that allows the user to place coffee orders.
+ * @author Stephanie Lin, Hyeseo Lee
+ */
 public class CoffeeController {
     @FXML
     private CheckBox caramel;
@@ -43,21 +47,31 @@ public class CoffeeController {
     private Scene scene;
     private Parent root;
 
-
-    // public void setOrderBasket(orderBasket orderbasket) {
-    //     orderBasket = orderbasket;
-    // }
-
+    /**
+     * setter method that assigns the passed in Order to the order variable in this class.
+     * @param Order representing the current order basket that user is interacting with.
+     */
     public void setOrder(Order Order) {
         this.order = Order;
     }
 
+    /**
+     * assigns the cup size user selects to the variable size and
+     * changes the MenuItem text to display the user's selection in GUI.
+     * @param event triggered when user selects a cup size from the MenuItem drop down.
+     */
     @FXML
     public void cupSize(ActionEvent event){
         MenuItem item = (MenuItem) event.getSource();
         size = item.getText();
         selectedSize.setText(size);
     }
+
+    /**
+     * assigns the quantity user selects the variable quantity and
+     * changes the MenuItem text to display the user's selection in GUI.
+     * @param event triggered when user selects a quantity from the MenuItem drop down.
+     */
     @FXML
     public void setQuantity(ActionEvent event){
         MenuItem item = (MenuItem) event.getSource();
@@ -65,40 +79,40 @@ public class CoffeeController {
         quantity = Integer.parseInt(quantityString);
         selectedQuantity.setText(item.getText());
     }
+
+    /**
+     * create a Coffee object with the user's selections.
+     * @return a Coffee object that holds the attributes based on user's selection.
+     */
     private Coffee createCoffee(){
         String[] addIns = new String[CAPACITY];
-        //int index = initialAddInSize;
-
         if(sweetCream.isSelected()){
             addIns[0] = "Sweet Cream";
-            //index++;
         }else if(frenchVanilla.isSelected()){
             addIns[1] = "French Vanilla";
-            //index++;
         }else if(irishCream.isSelected()){
             addIns[2]= "Irish Cream";
-            //index++;
         }else if(caramel.isSelected()){
             addIns[3] = "Caramel";
-            //index++;
         }else if(mocha.isSelected()){
             addIns[4] = "Mocha";
-            //index++;
         }
         for (int i = 0; i < 5; i++) {
             System.out.println(addIns[i]);
         }
-
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
-
         return coffee;
     }
+    /**
+     * adds the coffee order to the order basket and clears the user's selection once the order is added.
+     * @param event triggered when the user selects the add button.
+     */
     @FXML
     public void addCoffee(ActionEvent event){
         if (size == null) {
             coffeeMessage.setText("Please select cup size.");
         } else if (quantityString == null) {
-            coffeeMessage.setText("Please enter a quantity.");
+            coffeeMessage.setText("Please select a quantity.");
         } else {
             Coffee coffee = createCoffee();
             order.add(coffee);
@@ -106,7 +120,6 @@ public class CoffeeController {
             subTotalCoffee.setText(String.format("$%.2f", subTotal));
             coffeeMessage.setText("Your coffee order has been placed successfully!");
         }
-
         caramel.setSelected(false);
         frenchVanilla.setSelected(false);
         irishCream.setSelected(false);
@@ -114,11 +127,12 @@ public class CoffeeController {
         sweetCream.setSelected(false);
         selectedQuantity.setText("Select Quantity");
         selectedSize.setText("Select Size");
-
-        //updateSubTotal();
-
     }
 
+    /**
+     * removes the coffee order from the order basket based on user's specifications.
+     * @param event triggered when user selects the remove button.
+     */
     @FXML
     public void removeCoffee(ActionEvent event) {
         if (size == null) {
@@ -133,7 +147,8 @@ public class CoffeeController {
             }
             if (currentItem != null) {
                 if (currentItem.getQuantity() < quantity) {
-                    coffeeMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
+                    coffeeMessage.setText("Failed to remove item - enter a number less than " +
+                            Integer.toString(currentItem.getQuantity() + 1));
                 } else {
                     order.remove(coffee);
                     subTotalCoffee.setText(String.format("$%.2f", order.getTotalPrice()));
@@ -144,6 +159,11 @@ public class CoffeeController {
 
         }
     }
+    /**
+     * switches the scene from Coffee View back to the Main Menu View.
+     * @param event triggered when the user selects the return icon.
+     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     */
     @FXML
     public void backToMainCoffee(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -151,7 +171,6 @@ public class CoffeeController {
         root = loader.load();
 
         MainController main = loader.getController();
-        //main.setOrderBasket(orderBasket);
         main.setOrder(order);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -160,6 +179,11 @@ public class CoffeeController {
         stage.show();
     }
 
+    /**
+     * switches the scene from Coffee View to the Order Basket View.
+     * @param event triggered when the use selects the shopping cart icon.
+     * @throws IOException may occur if an input or output operation failes when loading the order-view FXML file.
+     */
     @FXML
     public void viewCoffeeOrderBasket(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();

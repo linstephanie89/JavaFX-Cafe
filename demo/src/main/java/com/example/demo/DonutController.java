@@ -22,13 +22,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Donut View that allows the user to place donut orders.
+ * @author Stephanie Lin, Hyeseo Lee
+ */
 public class DonutController implements Initializable {
     @FXML
     private ComboBox<String> donutComboBox;
     @FXML
     private ImageView donutImage;
     @FXML
-    private ListView <String> donutList;
+    private ListView<String> donutList;
     @FXML
     private TextField quantityInput;
     @FXML
@@ -45,37 +49,54 @@ public class DonutController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    /**
+     * setter method that assigns the passed in Order to the order variable in this class.
+     *
+     * @param Order representing the current order basket that user is interacting with.
+     */
     public void setOrder(Order Order) {
         this.order = Order;
     }
 
+    /**
+     * initializes the interface in Donut GUI.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         donutComboBox.getItems().addAll(donutTypes);
         donutComboBox.setOnAction(event -> {
             String selectedType = donutComboBox.getValue();
-            if(selectedType != null){
-                switch (selectedType){
+            if (selectedType != null) {
+                switch (selectedType) {
                     case "Yeast":
-                        Image yeastImage= new Image(getClass().getResourceAsStream("/Images/icons8-yeastDonut-66.png"));
+                        Image yeastImage = new Image(getClass().getResourceAsStream
+                                ("/Images/icons8-yeastDonut-66.png"));
                         donutImage.setImage(yeastImage);
-                        String[] yeastFlavors = {"Plain", "Glazed", "Chocolate", "Strawberry", "Boston Cream", "Powdered Sugar"};
+                        String[] yeastFlavors =
+                                {"Plain", "Glazed", "Chocolate", "Strawberry", "Boston Cream", "Powdered Sugar"};
                         donutList.setItems(FXCollections.observableArrayList(yeastFlavors));
-                        flavors.put(selectedType,yeastFlavors);
+                        flavors.put(selectedType, yeastFlavors);
                         break;
                     case "Cake":
-                        Image cakeImage= new Image(getClass().getResourceAsStream("/Images/icons8-cakeDonut-64.png"));
+                        Image cakeImage = new Image(getClass().getResourceAsStream
+                                ("/Images/icons8-cakeDonut-64.png"));
                         donutImage.setImage(cakeImage);
-                        String[] cakeFlavors = {"Plain","Chocolate", "Strawberry"};
+                        String[] cakeFlavors = {"Plain", "Chocolate", "Strawberry"};
                         donutList.setItems(FXCollections.observableArrayList(cakeFlavors));
-                        flavors.put(selectedType,cakeFlavors);
+                        flavors.put(selectedType, cakeFlavors);
                         break;
                     case "Donut Hole":
-                        Image donutHoleImage = new Image(getClass().getResourceAsStream("/Images/icons8-hanukkah-donut-48.png"));
+                        Image donutHoleImage = new Image(getClass().getResourceAsStream
+                                ("/Images/icons8-hanukkah-donut-48.png"));
                         donutImage.setImage(donutHoleImage);
                         String[] donutHoleFlavors = {"Plain", "Cinnamon", "Vanilla"};
                         donutList.setItems(FXCollections.observableArrayList(donutHoleFlavors));
-                        flavors.put(selectedType,donutHoleFlavors);
+                        flavors.put(selectedType, donutHoleFlavors);
                         break;
                     default:
                         break;
@@ -83,8 +104,14 @@ public class DonutController implements Initializable {
             }
         });
     }
+
+    /**
+     * adds the donut order to the order basket and clears the user's selection once the order is added.
+     *
+     * @param event triggered when the user selects the add button.
+     */
     @FXML
-    public void addDonut(ActionEvent event){
+    public void addDonut(ActionEvent event) {
         String selectedType = donutComboBox.getValue();
         String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
 
@@ -95,70 +122,99 @@ public class DonutController implements Initializable {
         } else if (quantityInput.getText().isEmpty()) {
             donutMessage.setText("Please enter a quantity.");
         } else {
-            int quantity = Integer.parseInt(quantityInput.getText());
-            Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
-            //donut.setQuantity(quantity);
-            this.order.add(donut);
-            subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
-            donutMessage.setText("Your donut order has been placed successfully!");
+            try {
+                int quantity = Integer.parseInt(quantityInput.getText());
+                if (quantity < 1) {
+                    donutMessage.setText("Quantity should be at least 1.");
+                } else {
+                    Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
+                    this.order.add(donut);
+                    subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
+                    donutMessage.setText("Your donut order has been placed successfully!");
+                }
+            } catch (NumberFormatException e) {
+                donutMessage.setText("Please enter a valid quantity.");
+            }
         }
     }
+        /**
+         * removes the donut order from the order basket.
+         * @param event triggered when the user selects the remove button.
+         */
+        @FXML
+        public void removeDonut (ActionEvent event) {
+            String selectedType = donutComboBox.getValue();
+            String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
 
-    @FXML
-    public void removeDonut(ActionEvent event) {
-        String selectedType = donutComboBox.getValue();
-        String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
+            if (selectedType == null) {
+                donutMessage.setText("Please select the donut type.");
+            } else if (selectedFlavor == null) {
+                donutMessage.setText("Please select a flavor.");
+            } else if (quantityInput.getText().isEmpty()) {
+                donutMessage.setText("Please enter a quantity.");
+            } else {
 
-        if (selectedType == null) {
-            donutMessage.setText("Please select the donut type.");
-        } else if (selectedFlavor == null) {
-            donutMessage.setText("Please select a flavor.");
-        } else if (quantityInput.getText().isEmpty()) {
-            donutMessage.setText("Please enter a quantity.");
-        } else {
-            int quantity = Integer.parseInt(quantityInput.getText());
-            Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
-            //donut.setQuantity(quantity);
-            Donut currentItem = (Donut) order.returnItem(donut);
-            if (currentItem == null) {
-                donutMessage.setText("Failed to remove item - no matching order");
-            }
-            if (currentItem != null) {
-                if (currentItem.getQuantity() < quantity) {
-                    donutMessage.setText("Failed to remove item - enter a number less than " + Integer.toString(currentItem.getQuantity() + 1));
-                } else {
-                    order.remove(donut);
-                    subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
-                    donutMessage.setText("Your donut order has been removed successfully!");;
+                try {
+                    int quantity = Integer.parseInt(quantityInput.getText());
+                    if (quantity < 1) {
+                        donutMessage.setText("Quantity should be at least 1.");
+                    } else {
+                        Donut donut = new Donut("donut", selectedType, selectedFlavor, quantity);
+                        Donut currentItem = (Donut) order.returnItem(donut);
+                        if (currentItem == null) {
+                            donutMessage.setText("Failed to remove item - no matching order");
+                        }
+                        if (currentItem != null) {
+                            if (currentItem.getQuantity() < quantity) {
+                                donutMessage.setText("Failed to remove item - enter a number less than " +
+                                        Integer.toString(currentItem.getQuantity() + 1));
+                            } else {
+                                order.remove(donut);
+                                subTotal.setText(String.format("$%.2f", order.getTotalPrice()));
+                                donutMessage.setText("Your donut order has been removed successfully!");
+                                ;
+                            }
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    donutMessage.setText("Please enter a valid quantity.");
                 }
             }
         }
-    }
-    @FXML
-    public void viewOrderBasket(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("order-view.fxml"));
-        root = loader.load();
-        OrderBasketController orderbasket = loader.getController();
-        orderbasket.setOrder(order);
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+        /**
+         * switches the scene from Donut View to the Order Basket View.
+         * @param event triggered when the use selects the shopping cart icon.
+         * @throws IOException may occur if an input or output operation failes when loading the order-view FXML file.
+         */
+        @FXML
+        public void viewOrderBasket (ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainController.class.getResource("order-view.fxml"));
+            root = loader.load();
+            OrderBasketController orderbasket = loader.getController();
+            orderbasket.setOrder(order);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        /**
+         * switches the scene from Donut View back to the Main Menu View.
+         * @param event triggered when the user selects the return icon.
+         * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+         */
+        @FXML
+        public void backToMainDonut (ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainController.class.getResource("main-view.fxml"));
+            root = loader.load();
 
-    @FXML
-    public void backToMainDonut(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("main-view.fxml"));
-        root = loader.load();
+            MainController main = loader.getController();
+            main.setOrder(order);
 
-        MainController main = loader.getController();
-        main.setOrder(order);
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
 }
