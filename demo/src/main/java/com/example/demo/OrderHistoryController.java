@@ -27,7 +27,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for the Order History View, allows the user to view all previous orders.
+ * Allows user functionalities to cancel orders.
+ * @author Stephanie Lin, Hyeseo Lee
+ */
 public class OrderHistoryController {
 
     @FXML
@@ -47,24 +51,25 @@ public class OrderHistoryController {
     private Scene scene;
     private Parent root;
     public int orderNumber;
-
     public void setOrder(Order order) {
         this.Order = order;
     }
-
+    /**
+     * setter method that assigns the passed in Order to the order variable.
+     * @param orderlist representing the current order basket.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         orderList = orderlist;
     }
-//    public void setOrderBasket(orderBasket orderBasket) {
-//        this.orderbasket = orderBasket;
-//    }
 
+    /**
+     * fills the TableView in GUI with all orders placed.
+     * It will include order number, items in each order, and price of each order.
+     * @param event triggered when the user selects View Order button.
+     */
     @FXML
     private void viewOrder(ActionEvent event) {
         boolean inOrder = false;
-//        if (orderList.isEmpty()) {
-//            orderNumber = 0;
-//        }
         if (Order != null) {
             for (int i = 0; i < orderList.size(); i++) {
                 if (Order.equals(orderList.get(i))) {
@@ -107,6 +112,10 @@ public class OrderHistoryController {
         orderTable.setItems(list);
     }
 
+    /**
+     * Creates a File for the user to save/export.
+     * It will also catch errors that may occur when user is creating the txt file.
+     */
     public void createFile() {
         try {
             File file = new File("Order History.txt");
@@ -121,6 +130,10 @@ public class OrderHistoryController {
         }
     }
 
+    /**
+     * populates the text file with the TableView order in GUI.
+     * @param event triggered when user selects Export button.
+     */
     @FXML
     public void writeToFile(ActionEvent event) {
         createFile();
@@ -145,6 +158,10 @@ public class OrderHistoryController {
         }
     }
 
+    /**
+     * removes or cancels user selected order from the order history.
+     * @param event triggered when the user selects the order and selects Remove button.
+     */
     @FXML
     public void removePlacedOrder(ActionEvent event) {
         Order selectedItem = orderTable.getSelectionModel().getSelectedItem();
@@ -156,6 +173,12 @@ public class OrderHistoryController {
         }
     }
 
+    /**
+     * switches the scene from Order History View to the Main View.
+     * @param event triggered when the use selects the return icon.
+     * @throws IOException may occur if an input or output operation fails.
+     * The fail can happen when loading the main-view FXML file.
+     */
     @FXML
     public void orderBackToMain(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
