@@ -1,0 +1,11 @@
+Order number 1: 
+Yeast donut, Strawberry flavor, quantity: 2
+Total price: $3.39
+
+Order number 2: 
+Order canceled.
+
+Order number 3: 
+Cake donut, Plain flavor, quantity: 2
+Total price: $3.82
+

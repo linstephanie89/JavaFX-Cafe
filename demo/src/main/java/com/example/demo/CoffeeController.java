@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Controller class for the Coffee View that allows the user to place coffee orders.
@@ -46,13 +47,17 @@ public class CoffeeController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private ArrayList<Order> orderList;
 
     /**
-     * setter method that assigns the passed in Order to the order variable in this class.
-     * @param Order representing the current order basket that user is interacting with.
+     * setter method that assigns the passed in Order to the order variable.
+     * @param Order representing the current order basket.
      */
     public void setOrder(Order Order) {
         this.order = Order;
+    }
+    public void setOrderList(ArrayList<Order> orderlist) {
+        orderList = orderlist;
     }
 
     /**
@@ -97,14 +102,11 @@ public class CoffeeController {
         }else if(mocha.isSelected()){
             addIns[4] = "Mocha";
         }
-        for (int i = 0; i < 5; i++) {
-            System.out.println(addIns[i]);
-        }
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
         return coffee;
     }
     /**
-     * adds the coffee order to the order basket and clears the user's selection once the order is added.
+     * adds the coffee order to the order basket and clears the user's selection.
      * @param event triggered when the user selects the add button.
      */
     @FXML
@@ -118,7 +120,8 @@ public class CoffeeController {
             order.add(coffee);
             double subTotal = order.getTotalPrice();
             subTotalCoffee.setText(String.format("$%.2f", subTotal));
-            coffeeMessage.setText("Your coffee order has been placed successfully!");
+            coffeeMessage.setText("Your coffee order has been placed" +
+                    " successfully!");
         }
         caramel.setSelected(false);
         frenchVanilla.setSelected(false);
@@ -127,6 +130,8 @@ public class CoffeeController {
         sweetCream.setSelected(false);
         selectedQuantity.setText("Select Quantity");
         selectedSize.setText("Select Size");
+
+
     }
 
     /**
@@ -143,16 +148,20 @@ public class CoffeeController {
             Coffee coffee = createCoffee();
             Coffee currentItem = (Coffee) order.returnItem(coffee);
             if (currentItem == null) {
-                coffeeMessage.setText("Failed to remove item - no matching order");
+                coffeeMessage.setText("Failed to remove item - " +
+                        "no matching order");
             }
             if (currentItem != null) {
                 if (currentItem.getQuantity() < quantity) {
-                    coffeeMessage.setText("Failed to remove item - enter a number less than " +
+                    coffeeMessage.setText("Failed to remove item - " +
+                            "enter a number less than " +
                             Integer.toString(currentItem.getQuantity() + 1));
                 } else {
                     order.remove(coffee);
-                    subTotalCoffee.setText(String.format("$%.2f", order.getTotalPrice()));
-                    coffeeMessage.setText("Your coffee order has been removed successfully!");
+                    subTotalCoffee.setText(String.format("$%.2f",
+                            order.getTotalPrice()));
+                    coffeeMessage.setText("Your coffee order has been " +
+                            "removed successfully!");
                 }
 
             }
@@ -162,16 +171,19 @@ public class CoffeeController {
     /**
      * switches the scene from Coffee View back to the Main Menu View.
      * @param event triggered when the user selects the return icon.
-     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     * @throws IOException may occur if an input or output operation fails.
+     * This can happen when loading the main-view FXML file.
      */
     @FXML
     public void backToMainCoffee(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        loader.setLocation(MainController.class.getResource
+                ("main-view.fxml"));
         root = loader.load();
 
         MainController main = loader.getController();
         main.setOrder(order);
+        main.setOrderList(orderList);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -182,16 +194,19 @@ public class CoffeeController {
     /**
      * switches the scene from Coffee View to the Order Basket View.
      * @param event triggered when the use selects the shopping cart icon.
-     * @throws IOException may occur if an input or output operation failes when loading the order-view FXML file.
+     * @throws IOException may occur if an input or output operation failes.
+     * This can happen when loading the order-view FXML file.
      */
     @FXML
     public void viewCoffeeOrderBasket(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("order-view.fxml"));
+        loader.setLocation(MainController.class.getResource
+                ("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
         //orderbasket.setOrderBasket(orderBasket);
         orderbasket.setOrder(order);
+        orderbasket.setOrderList(orderList);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

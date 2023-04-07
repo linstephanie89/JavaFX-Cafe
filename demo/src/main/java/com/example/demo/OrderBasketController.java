@@ -28,7 +28,6 @@ public class OrderBasketController implements Initializable{
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private double tax = 0.06625;
 
     @FXML
     public TableColumn<Coffee, String> addInCol;
@@ -50,14 +49,21 @@ public class OrderBasketController implements Initializable{
     private Text salesTaxText;
     @FXML
     private Text TotalText;
+    private double tax = 0.06625;
+
     private Order basketOrder;
+    private ArrayList<MenuItem> orderList;
+    private ArrayList<Order> placedOrderList;
 
     /**
-     * setter method that assigns the passed in Order to the order variable in this class.
-     * @param order representing the current order basket that user is interacting with.
+     * setter method that assigns the passed in Order to the order variable.
+     * @param order representing the current order basket.
      */
     public void setOrder(Order order) {
         this.basketOrder = order;
+    }
+    public void setOrderList(ArrayList<Order> orderlist) {
+        placedOrderList = orderlist;
     }
 
     /**
@@ -77,19 +83,21 @@ public class OrderBasketController implements Initializable{
     }
 
     /**
-     * fills the TableView in GUI with the user's order basket items, add ins, size, subtotal, tax, and total.
+     * fills the TableView in GUI with the user's order basket items.
+     * It will include add ins, size, subtotal, tax, and total.
      */
     @FXML
     public void populate() {
-        ArrayList<MenuItem> orderList = this.basketOrder.OrderList();
-        ObservableList<MenuItem> list = FXCollections.<MenuItem>observableArrayList(orderList);
-        System.out.println(list);
+        orderList = basketOrder.OrderList();
+        ObservableList<MenuItem> list =
+                FXCollections.<MenuItem>observableArrayList(orderList);
         orderBasketTable.setEditable(true);
         quantityCol.setCellValueFactory(cellData -> {
             MenuItem rowValue = cellData.getValue();
             if(rowValue!=null){
                 String quantityString = String.valueOf(rowValue.getQuantity());
-                IntegerProperty quantity = new SimpleIntegerProperty(Integer.parseInt(quantityString));
+                IntegerProperty quantity = new
+                        SimpleIntegerProperty(Integer.parseInt(quantityString));
                 return quantity.asObject();
             }else{
                 return null;
@@ -126,8 +134,8 @@ public class OrderBasketController implements Initializable{
         orderBasketTable.setItems(list);
 
         double subTotal = basketOrder.getTotalPrice();
-        double salesTax = subTotal *tax;
-        double total = subTotal+salesTax;
+        double salesTax = subTotal * tax;
+        double total = basketOrder.priceWithTax();
 
         subTotalText.setText(String.format("$%.2f", subTotal));
         salesTaxText.setText(String.format("$%.2f", salesTax));
@@ -137,16 +145,19 @@ public class OrderBasketController implements Initializable{
     /**
      * switches the scene from Order Basket View to the Main View.
      * @param event triggered when the use selects the return icon.
-     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     * @throws IOException may occur if an input or output operation fails.
+     * The fail can happen when loading the main-view FXML file.
      */
     @FXML
     private void basketBackToMain(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        loader.setLocation(MainController.class.getResource
+                ("main-view.fxml"));
         root = loader.load();
 
         MainController main = loader.getController();
         main.setOrder(basketOrder);
+        main.setOrderList(placedOrderList);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -156,19 +167,60 @@ public class OrderBasketController implements Initializable{
     /**
      * switches the scene from Order Basket View to the Order History View.
      * @param event triggered when the use selects the order button.
-     * @throws IOException may occur if an input or output operation fails when loading the main-view FXML file.
+     * @throws IOException may occur if an input or output operation fails.
+     * This can happen when loading the main-view FXML file.
      */
     public void basketOrder(ActionEvent event) throws IOException{
+        emptyOrderCoffee();
+        emptyOrderDonut();
+        emptyOrderMain();
+
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("order-history-view.fxml"));
-        root = loader.load();
-        OrderHistoryController orderHistory = loader.getController();
-        orderHistory.setOrder(basketOrder);
-        basketOrder = null;
+
+        loader.setLocation(MainController.class.getResource
+                ("order-history-view.fxml"));
+        Parent orderHistoryRoot = loader.load();
+        OrderHistoryController Order = loader.getController();
+        Order.setOrder(basketOrder);
+        Order.setOrderList(placedOrderList);
+        Order order = new Order();
+
+        orderList = new ArrayList<MenuItem>();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = new Scene(orderHistoryRoot);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void emptyOrderCoffee() throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        Order order = new Order();
+
+        loader.setLocation(MainController.class.getResource
+                ("coffee-view.fxml"));
+        Parent coffeeRoot = loader.load();
+        CoffeeController coffee = loader.getController();
+        coffee.setOrder(order);
+    }
+
+    public void emptyOrderDonut() throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        Order order = new Order();
+        loader.setLocation(MainController.class.getResource
+                ("donut-view.fxml"));
+        Parent donutRoot = loader.load();
+        DonutController donut = loader.getController();
+        donut.setOrder(order);
+    }
+
+    public void emptyOrderMain() throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        Order order = new Order();
+        loader.setLocation(MainController.class.getResource
+                ("main-view.fxml"));
+        Parent mainRoot = loader.load();
+        MainController main = loader.getController();
+        main.setOrder(order);
     }
 
     /**
@@ -177,7 +229,8 @@ public class OrderBasketController implements Initializable{
      */
     @FXML
     public void removeItem(ActionEvent event){
-        MenuItem selectedItem = orderBasketTable.getSelectionModel().getSelectedItem();
+        MenuItem selectedItem = orderBasketTable.getSelectionModel()
+                .getSelectedItem();
         if(selectedItem != null){
             basketOrder.remove(selectedItem);
             orderBasketTable.getItems().remove(selectedItem);

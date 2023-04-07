@@ -11,6 +11,7 @@ public class Order {
     private int GrowthRate = 4;
     private double totalPrice;
     private int orderNumber;
+    private double tax = 0.06625;
 
     public Order() {
         this.Order = new MenuItem[InitialCapacity];
@@ -124,6 +125,11 @@ public class Order {
         } else {
             return false;
         }
+    }
+
+    public double priceWithTax() {
+        double salesTax = totalPrice *tax;
+        return totalPrice+salesTax;
     }
 
 }

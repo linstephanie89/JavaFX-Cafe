@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import code.*;
 
 import code.MenuItem;
@@ -34,20 +35,25 @@ public class OrderHistoryController {
     @FXML
     private TableColumn<Order, String> orderItemCol;
     @FXML
-    private TableColumn<Order, Double> orderPriceCol;
+    private TableColumn<Order, String> orderPriceCol;
     @FXML
     private Label orderMessage;
     @FXML
     public TableView<Order> orderTable;
     private Order Order;
-    private ArrayList<Order> orderList = new ArrayList<>();
+    private ArrayList<Order> orderList;
     //private orderBasket orderbasket;
     private Stage stage;
     private Scene scene;
     private Parent root;
+    public int orderNumber;
 
     public void setOrder(Order order) {
         this.Order = order;
+    }
+
+    public void setOrderList(ArrayList<Order> orderlist) {
+        orderList = orderlist;
     }
 //    public void setOrderBasket(orderBasket orderBasket) {
 //        this.orderbasket = orderBasket;
@@ -56,36 +62,46 @@ public class OrderHistoryController {
     @FXML
     private void viewOrder(ActionEvent event) {
         boolean inOrder = false;
+//        if (orderList.isEmpty()) {
+//            orderNumber = 0;
+//        }
         if (Order != null) {
             for (int i = 0; i < orderList.size(); i++) {
                 if (Order.equals(orderList.get(i))) {
                     inOrder = true;
                 }
             }
-            if (inOrder == false) {
+            if (inOrder == false && Order != null
+                    && Order.getTotalPrice() != 0) {
                 orderList.add(Order);
+                int index = orderList.indexOf(Order);
+                Order.setOrderNumber(index + 1);
+                orderMessage.setText("Ordered");
+                Order = new Order();
             }
         }
-
-        ObservableList<Order> list = FXCollections.<Order>observableArrayList(orderList);
-
+        ObservableList<Order> list =
+                FXCollections.<Order>observableArrayList(orderList);
         orderNumberCol.setCellValueFactory(cellData -> {
             Order rowValue = cellData.getValue();
             String orderString = String.valueOf(rowValue.getOrderNumber());
-            IntegerProperty orderNumber = new SimpleIntegerProperty(Integer.parseInt(orderString));
+            IntegerProperty orderNumber =
+                    new SimpleIntegerProperty(Integer.parseInt(orderString));
             return orderNumber.asObject();
         });
 
         orderItemCol.setCellValueFactory(cellData -> {
             Order rowValue = cellData.getValue();
+            if (rowValue.getTotalPrice() == 0) {
+                return new SimpleStringProperty("Order Canceled.");
+            }
             return new SimpleStringProperty(rowValue.toString());
         });
 
         orderPriceCol.setCellValueFactory(cellData -> {
             Order rowValue = cellData.getValue();
-            String orderString = String.valueOf(rowValue.getTotalPrice());
-            DoubleProperty orderPrice = new SimpleDoubleProperty(Double.parseDouble(orderString));
-            return orderPrice.asObject();
+            return new SimpleStringProperty
+                    (String.format("$%.2f", rowValue.priceWithTax()));
         });
 
         orderTable.setItems(list);
@@ -108,15 +124,18 @@ public class OrderHistoryController {
     @FXML
     public void writeToFile(ActionEvent event) {
         createFile();
-        try{
+        try {
             FileWriter writer = new FileWriter("Order History.txt");
             for (int i = 0; i < orderList.size(); i++) {
-                writer.write("Order number " + Integer.toString(i) + ": ");
+                writer.write("Order number "
+                        + Integer.toString(i + 1) + ": \n");
                 Order orderBasket = orderList.get(i);
-                if (orderBasket == null) {
-                    writer.write("Order canceled.\n");
+                if (orderBasket.getTotalPrice() == 0) {
+                    writer.write("Order canceled.\n\n");
                 } else {
                     writer.write(orderBasket.toString());
+                    writer.write("Total price: " + String.format
+                            ("$%.2f", orderBasket.priceWithTax()) + "\n\n");
                 }
             }
             writer.close();
@@ -127,15 +146,28 @@ public class OrderHistoryController {
     }
 
     @FXML
-    public void orderBackToMain(ActionEvent event) throws IOException{
+    public void removePlacedOrder(ActionEvent event) {
+        Order selectedItem = orderTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            int index = orderList.indexOf(selectedItem);
+            orderList.set(index, new Order());
+            orderList.get(index).setOrderNumber(index + 1);
+            orderTable.getItems().remove(selectedItem);
+        }
+    }
+
+    @FXML
+    public void orderBackToMain(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("main-view.fxml"));
+        loader.setLocation(MainController.class.getResource
+                ("main-view.fxml"));
         root = loader.load();
 
         MainController main = loader.getController();
         main.setOrder(Order);
+        main.setOrderList(orderList);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
