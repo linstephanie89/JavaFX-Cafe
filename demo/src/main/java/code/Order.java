@@ -116,4 +116,12 @@ public class Order {
         this.orderNumber = number;
     }
 
+    public boolean equals(Order order) {
+        if (orderNumber == order.getOrderNumber()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
