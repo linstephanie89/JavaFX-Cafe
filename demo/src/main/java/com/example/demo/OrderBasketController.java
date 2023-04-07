@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class OrderBasketController implements Initializable{
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private double tax = 0.06625;
 
     @FXML
     public TableColumn<Coffee, String> addInCol;
@@ -39,6 +41,12 @@ public class OrderBasketController implements Initializable{
 
     @FXML
     public TableColumn<Coffee , String> sizeCol;
+    @FXML
+    private Text subTotalText;
+    @FXML
+    private Text salesTaxText;
+    @FXML
+    private Text TotalText;
 
     //private orderBasket orderBasket;
     private Order basketOrder;
@@ -108,9 +116,14 @@ public class OrderBasketController implements Initializable{
         });
 
         orderBasketTable.setItems(list);
-        //orderBasketTable.getColumns().addAll(quantityCol, itemCol, addInCol, sizeCol);
-        //stage.setScene(scene);
-        //stage.show();
+
+        double subTotal = basketOrder.getTotalPrice();
+        double salesTax = subTotal *tax;
+        double total = subTotal+salesTax;
+
+        subTotalText.setText(String.format("$%.2f", subTotal));
+        salesTaxText.setText(String.format("$%.2f", salesTax));
+        TotalText.setText(String.format("$%.2f",total));
     }
 
     @FXML
@@ -134,10 +147,19 @@ public class OrderBasketController implements Initializable{
         root = loader.load();
         OrderHistoryController orderHistory = loader.getController();
         orderHistory.setOrder(basketOrder);
+        basketOrder = null;
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    @FXML
+    public void removeItem(ActionEvent event){
+        MenuItem selectedItem = orderBasketTable.getSelectionModel().getSelectedItem();
+        if(selectedItem != null){
+            basketOrder.remove(selectedItem);
+            orderBasketTable.getItems().remove(selectedItem);
+        }
     }
 
 }

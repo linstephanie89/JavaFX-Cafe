@@ -45,10 +45,6 @@ public class DonutController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    // public void setOrderBasket(orderBasket orderbasket) {
-    //     this.orderBasket = orderbasket;
-    // }
-
     public void setOrder(Order Order) {
         this.order = Order;
     }
@@ -145,26 +141,10 @@ public class DonutController implements Initializable {
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
         orderbasket.setOrder(order);
-        //orderbasket.setOrderBasket(orderBasket);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("order-view.fxml"));
-//        OrderBasketController controller = new OrderBasketController();
-//        controller.setOrderBasket(orderBasket);
-//        root = loader.load();
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//        root = (Parent)loader.load();
-//        OrderBasketController orderbasket = loader.<OrderBasketController>getController();
-//        orderbasket.setOrderBasket(orderBasket);
-//        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
     }
 
     @FXML
@@ -181,12 +161,4 @@ public class DonutController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-//    private double calcSubTotal(){
-//        double subTotal = 0;
-//        for(Donut donut: orderBasket){
-//            subTotal+=donut.itemPrice();
-//        }
-//        return subTotal;
-//    }
 }

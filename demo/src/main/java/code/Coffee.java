@@ -1,5 +1,9 @@
 package code;
 
+/**
+ * Coffee subclass of MenuItem, holds the coffee attributes
+ * @author Stephanie Lin, Hyeseo Lee
+ */
 public class Coffee extends MenuItem {
 
     private String cupSize;
@@ -13,6 +17,13 @@ public class Coffee extends MenuItem {
     private double VENTI_PRICE=3.09;
     private double NONE = 0;
 
+    /**
+     * Coffee constructor that is assigning each component of the Coffee class
+     * @param name
+     * @param cupSize
+     * @param addIns
+     * @param quantity
+     */
     public Coffee(String name, String cupSize, String[] addIns, int quantity){
         super(name, quantity);
         this.cupSize = cupSize;

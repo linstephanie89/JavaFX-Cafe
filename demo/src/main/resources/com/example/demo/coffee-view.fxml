@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CoffeeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CoffeeController">
    <children>
       <MenuButton fx:id="selectedSize" layoutX="103.0" layoutY="67.0" mnemonicParsing="false" onAction="#cupSize" text="Select Size">
         <items>
@@ -36,10 +42,20 @@
       <Label layoutX="26.0" layoutY="281.0" text="Sub Total:" />
       <TextArea fx:id="subTotalCoffee" layoutX="91.0" layoutY="270.0" prefHeight="26.0" prefWidth="200.0" />
       <Button layoutX="73.0" layoutY="324.0" mnemonicParsing="false" onAction="#removeCoffee" text="Remove" />
-      <Button fx:id="coffeeBackButton" layoutX="147.0" layoutY="324.0" mnemonicParsing="false" onAction="#backToMainCoffee" text="Back" />
-      <Button layoutX="218.0" layoutY="324.0" mnemonicParsing="false" onAction="#viewCoffeeOrderBasket">
+      <Button fx:id="coffeeBackButton" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToMainCoffee">
          <graphic>
-            <ImageView fitHeight="37.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="16.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-return-50.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="151.0" layoutY="317.0" mnemonicParsing="false" onAction="#viewCoffeeOrderBasket">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-shopping-cart-64.png" />
+               </image></ImageView>
          </graphic>
       </Button>
    </children>
