@@ -48,6 +48,11 @@ public class CoffeeController {
     private Scene scene;
     private Parent root;
     private ArrayList<Order> orderList;
+    private int sweetCreamIndex = 0;
+    private int frenchVanillaIndex = 1;
+    private int irishCreamIndex = 2;
+    private int caramelIndex = 3;
+    private int mochaIndex = 4;
 
     /**
      * setter method that assigns the passed in Order to the order variable.
@@ -97,15 +102,15 @@ public class CoffeeController {
     private Coffee createCoffee(){
         String[] addIns = new String[CAPACITY];
         if(sweetCream.isSelected()){
-            addIns[0] = "Sweet Cream";
+            addIns[sweetCreamIndex] = "Sweet Cream";
         }if(frenchVanilla.isSelected()){
-            addIns[1] = "French Vanilla";
+            addIns[frenchVanillaIndex] = "French Vanilla";
         }if(irishCream.isSelected()){
-            addIns[2]= "Irish Cream";
+            addIns[irishCreamIndex]= "Irish Cream";
         }if(caramel.isSelected()){
-            addIns[3] = "Caramel";
+            addIns[caramelIndex] = "Caramel";
         }if(mocha.isSelected()){
-            addIns[4] = "Mocha";
+            addIns[mochaIndex] = "Mocha";
         }
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
         return coffee;

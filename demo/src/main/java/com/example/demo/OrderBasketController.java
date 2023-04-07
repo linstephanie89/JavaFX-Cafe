@@ -62,6 +62,11 @@ public class OrderBasketController implements Initializable{
     public void setOrder(Order order) {
         this.basketOrder = order;
     }
+
+    /**
+     * Setter method that assigns passed in ArrayList of Orders to placedOrderList.
+     * @param orderlist representing the ArrayList to update placedOrderList.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         placedOrderList = orderlist;
     }
@@ -92,17 +97,8 @@ public class OrderBasketController implements Initializable{
         ObservableList<MenuItem> list =
                 FXCollections.<MenuItem>observableArrayList(orderList);
         orderBasketTable.setEditable(true);
-        quantityCol.setCellValueFactory(cellData -> {
-            MenuItem rowValue = cellData.getValue();
-            if(rowValue!=null){
-                String quantityString = String.valueOf(rowValue.getQuantity());
-                IntegerProperty quantity = new
-                        SimpleIntegerProperty(Integer.parseInt(quantityString));
-                return quantity.asObject();
-            }else{
-                return null;
-            }
-        });
+
+        setQuantity(list);
         itemCol.setCellValueFactory(cellData -> {
             MenuItem rowValue = cellData.getValue();
             if(rowValue!=null){
@@ -132,7 +128,31 @@ public class OrderBasketController implements Initializable{
             }
         });
         orderBasketTable.setItems(list);
+        updatePrice();
+    }
 
+    /**
+     * Populates the column for quantity.
+     * @param list the ObservableList of MenuItems containing data for item.
+     */
+    public void setQuantity(ObservableList<MenuItem> list) {
+        quantityCol.setCellValueFactory(cellData -> {
+            MenuItem rowValue = cellData.getValue();
+            if(rowValue!=null){
+                String quantityString = String.valueOf(rowValue.getQuantity());
+                IntegerProperty quantity = new
+                        SimpleIntegerProperty(Integer.parseInt(quantityString));
+                return quantity.asObject();
+            }else{
+                return null;
+            }
+        });
+    }
+
+    /**
+     * updates the price value fields once items are added to basket.
+     */
+    public void updatePrice() {
         double subTotal = basketOrder.getTotalPrice();
         double salesTax = subTotal * tax;
         double total = basketOrder.priceWithTax();
@@ -192,6 +212,11 @@ public class OrderBasketController implements Initializable{
         stage.show();
     }
 
+    /**
+     * passes in a new order object to Coffee controller once the order has been placed.
+     * @throws IOException may occur if an input or output operation fails.
+     * This can happen when loading the main-view FXML file.
+     */
     public void emptyOrderCoffee() throws IOException{
         FXMLLoader loader = new FXMLLoader();
         Order order = new Order();
@@ -203,6 +228,11 @@ public class OrderBasketController implements Initializable{
         coffee.setOrder(order);
     }
 
+    /**
+     * passes in a new order object to Donut controller once the order has been placed.
+     * @throws IOException may occur if an input or output operation fails.
+     * This can happen when loading the main-view FXML file.
+     */
     public void emptyOrderDonut() throws IOException{
         FXMLLoader loader = new FXMLLoader();
         Order order = new Order();
@@ -213,6 +243,11 @@ public class OrderBasketController implements Initializable{
         donut.setOrder(order);
     }
 
+    /**
+     * passes in a new order object to Main controller once the order has been placed.
+     * @throws IOException may occur if an input or output operation fails.
+     * This can happen when loading the main-view FXML file.
+     */
     public void emptyOrderMain() throws IOException{
         FXMLLoader loader = new FXMLLoader();
         Order order = new Order();

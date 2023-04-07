@@ -43,7 +43,8 @@ public class DonutController implements Initializable {
     private TextArea subTotal;
     private Order order;
     private int quantity;
-    private int orderNum = 1;
+    private int validQuantity = 1;
+    private int increment = 1;
     private int capacity = 4;
     private String[] donutTypes = {"Yeast", "Cake", "Donut Hole"};
     private Map<String, String[]> flavors = new HashMap<>();
@@ -136,7 +137,7 @@ public class DonutController implements Initializable {
         } else {
             try {
                 int quantity = Integer.parseInt(quantityInput.getText());
-                if (quantity < 1) {
+                if (quantity < validQuantity) {
                     donutMessage.setText("Quantity should be at least 1.");
                 } else {
                     Donut donut = new Donut("donut", selectedType,
@@ -170,7 +171,7 @@ public class DonutController implements Initializable {
         } else {
             try {
                 int quantity = Integer.parseInt(quantityInput.getText());
-                if (quantity < 1) {
+                if (quantity < validQuantity) {
                     donutMessage.setText("Quantity should be at least 1.");
                 } else {
                     Donut donut = new Donut("donut", selectedType,
@@ -185,7 +186,7 @@ public class DonutController implements Initializable {
                             donutMessage.setText("Failed to remove item - " +
                                     "enter a number less than " +
                                     Integer.toString(currentItem.
-                                            getQuantity() + 1));
+                                            getQuantity() + increment));
                         } else {
                             order.remove(donut);
                             subTotal.setText(String.format("$%.2f",
