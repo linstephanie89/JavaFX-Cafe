@@ -16,6 +16,7 @@ public class Coffee extends MenuItem {
     private double GRANDE_PRICE = 2.69;
     private double VENTI_PRICE=3.09;
     private double NONE = 0;
+    private int numOfAddIns = 5;
 
     /**
      * Coffee constructor that is assigning each component of the Coffee class.
@@ -88,7 +89,7 @@ public class Coffee extends MenuItem {
     public boolean compareAddIns(Coffee coffee) {
         String[] newAddIns = coffee.getAddIns();
         String[] currAddIns = this.addIns;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numOfAddIns; i++) {
             if (newAddIns[i] != currAddIns[i]) {
                 return false;
             }
@@ -113,7 +114,7 @@ public class Coffee extends MenuItem {
     @Override
     public String toString() {
         String returnString= this.getCupSize() + " coffee with: ";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numOfAddIns; i++) {
             if (addIns[i] != null) {
                 returnString += addIns[i] + ", ";
             }
@@ -129,7 +130,7 @@ public class Coffee extends MenuItem {
      */
     public String addInToString(String[] addIns) {
         String returnString = "";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numOfAddIns; i++) {
             if (addIns[i] != null) {
                 returnString += addIns[i] + " ";
             }
