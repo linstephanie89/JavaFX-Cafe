@@ -93,13 +93,13 @@ public class CoffeeController {
         String[] addIns = new String[CAPACITY];
         if(sweetCream.isSelected()){
             addIns[0] = "Sweet Cream";
-        }else if(frenchVanilla.isSelected()){
+        }if(frenchVanilla.isSelected()){
             addIns[1] = "French Vanilla";
-        }else if(irishCream.isSelected()){
+        }if(irishCream.isSelected()){
             addIns[2]= "Irish Cream";
-        }else if(caramel.isSelected()){
+        }if(caramel.isSelected()){
             addIns[3] = "Caramel";
-        }else if(mocha.isSelected()){
+        }if(mocha.isSelected()){
             addIns[4] = "Mocha";
         }
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);

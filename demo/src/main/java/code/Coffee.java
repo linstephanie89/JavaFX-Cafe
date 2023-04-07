@@ -131,7 +131,7 @@ public class Coffee extends MenuItem {
         String returnString = "";
         for (int i = 0; i < 5; i++) {
             if (addIns[i] != null) {
-                returnString += addIns[i];
+                returnString += addIns[i] + " ";
             }
         }
         return returnString;
