@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import code.*;
 
 import javafx.collections.FXCollections;
@@ -40,7 +41,6 @@ public class DonutController implements Initializable {
     private Label donutMessage;
     @FXML
     private TextArea subTotal;
-    //private orderBasket orderBasket;
     private Order order;
     private int quantity;
     private int orderNum = 1;
@@ -59,13 +59,17 @@ public class DonutController implements Initializable {
     public void setOrder(Order Order) {
         this.order = Order;
     }
+
+    /**
+     * Setter method that assigns passed in ArrayList of Orders to orderList.
+     * @param orderlist representing the ArrayList to update orderList.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         orderList = orderlist;
     }
 
     /**
      * initializes the interface in Donut GUI.
-     *
      * @param location  The location used to resolve relative paths for the root, or
      *                  {@code null} if the location is not known.
      * @param resources The resources used to localize the root object, or {@code null} if
@@ -148,16 +152,15 @@ public class DonutController implements Initializable {
             }
         }
     }
-        /**
-         * removes the donut order from the order basket.
-         * @param event triggered when the user selects the remove button.
-         */
-        @FXML
-        public void removeDonut (ActionEvent event) {
-            String selectedType = donutComboBox.getValue();
-            String selectedFlavor = donutList.getSelectionModel().
-                    getSelectedItem();
 
+    /**
+     * removes the donut order from the order basket.
+     * @param event triggered when the user selects the remove button.
+     */
+    @FXML
+    public void removeDonut(ActionEvent event) {
+        String selectedType = donutComboBox.getValue();
+        String selectedFlavor = donutList.getSelectionModel().getSelectedItem();
         if (selectedType == null) {
             donutMessage.setText("Please select the donut type.");
         } else if (selectedFlavor == null) {
@@ -165,7 +168,6 @@ public class DonutController implements Initializable {
         } else if (quantityInput.getText().isEmpty()) {
             donutMessage.setText("Please enter a quantity.");
         } else {
-
             try {
                 int quantity = Integer.parseInt(quantityInput.getText());
                 if (quantity < 1) {
@@ -190,7 +192,6 @@ public class DonutController implements Initializable {
                                     order.getTotalPrice()));
                             donutMessage.setText("Your donut order has been " +
                                     "removed successfully!");
-                            ;
                         }
                     }
                 }
@@ -199,11 +200,12 @@ public class DonutController implements Initializable {
             }
         }
     }
+
     /**
      * switches the scene from Donut View to the Order Basket View.
      * @param event triggered when the use selects the shopping cart icon.
      * @throws IOException may occur if an input or output operation failes.
-     * This can happen when loading the order-view FXML file.
+     *                     This can happen when loading the order-view FXML file.
      */
     @FXML
     public void viewOrderBasket(ActionEvent event) throws IOException {
@@ -214,33 +216,31 @@ public class DonutController implements Initializable {
         OrderBasketController orderbasket = loader.getController();
         orderbasket.setOrder(order);
         orderbasket.setOrderList(orderList);
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
 
-        /**
-         * switches the scene from Donut View back to the Main Menu View.
-         * @param event triggered when the user selects the return icon.
-         * @throws IOException may occur if an input or output operation fails.
-         * This can happen when loading the main-view FXML file.
-         */
-        @FXML
-        public void backToMainDonut (ActionEvent event) throws IOException {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainController.class.getResource
-                    ("main-view.fxml"));
-            root = loader.load();
-
-            MainController main = loader.getController();
-            main.setOrder(order);
-            main.setOrderList(orderList);
-
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
+    /**
+     * switches the scene from Donut View back to the Main Menu View.
+     * @param event triggered when the user selects the return icon.
+     * @throws IOException may occur if an input or output operation fails.
+     *                     This can happen when loading the main-view FXML file.
+     */
+    @FXML
+    public void backToMainDonut(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource
+                ("main-view.fxml"));
+        root = loader.load();
+        MainController main = loader.getController();
+        main.setOrder(order);
+        main.setOrderList(orderList);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

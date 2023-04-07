@@ -56,6 +56,11 @@ public class CoffeeController {
     public void setOrder(Order Order) {
         this.order = Order;
     }
+
+    /**
+     * Setter method that assigns passed in ArrayList of Orders to orderList.
+     * @param orderlist representing the ArrayList to update orderList.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         orderList = orderlist;
     }
@@ -105,6 +110,7 @@ public class CoffeeController {
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
         return coffee;
     }
+
     /**
      * adds the coffee order to the order basket and clears the user's selection.
      * @param event triggered when the user selects the add button.
@@ -130,8 +136,6 @@ public class CoffeeController {
         sweetCream.setSelected(false);
         selectedQuantity.setText("Select Quantity");
         selectedSize.setText("Select Size");
-
-
     }
 
     /**
@@ -168,6 +172,7 @@ public class CoffeeController {
 
         }
     }
+
     /**
      * switches the scene from Coffee View back to the Main Menu View.
      * @param event triggered when the user selects the return icon.
@@ -204,7 +209,6 @@ public class CoffeeController {
                 ("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
-        //orderbasket.setOrderBasket(orderBasket);
         orderbasket.setOrder(order);
         orderbasket.setOrderList(orderList);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -212,7 +216,4 @@ public class CoffeeController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 }
