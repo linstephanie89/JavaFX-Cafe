@@ -48,6 +48,11 @@ public class CoffeeController {
     private Scene scene;
     private Parent root;
     private ArrayList<Order> orderList;
+    private int sweetCreamIndex = 0;
+    private int frenchVanillaIndex = 1;
+    private int irishCreamIndex = 2;
+    private int caramelIndex = 3;
+    private int mochaIndex = 4;
 
     /**
      * setter method that assigns the passed in Order to the order variable.
@@ -56,6 +61,11 @@ public class CoffeeController {
     public void setOrder(Order Order) {
         this.order = Order;
     }
+
+    /**
+     * Setter method that assigns passed in ArrayList of Orders to orderList.
+     * @param orderlist representing the ArrayList to update orderList.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         orderList = orderlist;
     }
@@ -92,19 +102,20 @@ public class CoffeeController {
     private Coffee createCoffee(){
         String[] addIns = new String[CAPACITY];
         if(sweetCream.isSelected()){
-            addIns[0] = "Sweet Cream";
+            addIns[sweetCreamIndex] = "Sweet Cream";
         }if(frenchVanilla.isSelected()){
-            addIns[1] = "French Vanilla";
+            addIns[frenchVanillaIndex] = "French Vanilla";
         }if(irishCream.isSelected()){
-            addIns[2]= "Irish Cream";
+            addIns[irishCreamIndex]= "Irish Cream";
         }if(caramel.isSelected()){
-            addIns[3] = "Caramel";
+            addIns[caramelIndex] = "Caramel";
         }if(mocha.isSelected()){
-            addIns[4] = "Mocha";
+            addIns[mochaIndex] = "Mocha";
         }
         Coffee coffee = new Coffee("Coffee", size, addIns, quantity);
         return coffee;
     }
+
     /**
      * adds the coffee order to the order basket and clears the user's selection.
      * @param event triggered when the user selects the add button.
@@ -130,8 +141,6 @@ public class CoffeeController {
         sweetCream.setSelected(false);
         selectedQuantity.setText("Select Quantity");
         selectedSize.setText("Select Size");
-
-
     }
 
     /**
@@ -168,6 +177,7 @@ public class CoffeeController {
 
         }
     }
+
     /**
      * switches the scene from Coffee View back to the Main Menu View.
      * @param event triggered when the user selects the return icon.
@@ -204,7 +214,6 @@ public class CoffeeController {
                 ("order-view.fxml"));
         root = loader.load();
         OrderBasketController orderbasket = loader.getController();
-        //orderbasket.setOrderBasket(orderBasket);
         orderbasket.setOrder(order);
         orderbasket.setOrderList(orderList);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -212,7 +221,4 @@ public class CoffeeController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 }

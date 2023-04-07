@@ -24,7 +24,6 @@ public class MainController {
     private Parent root;
     private Order order = new Order();
     private ArrayList<Order> orderList  = new ArrayList<>();
-    //private orderBasket orderbasket = new orderBasket();
 
     /**
      * setter method that assigns the passed in Order to the order variable.
@@ -34,6 +33,10 @@ public class MainController {
         this.order = Order;
     }
 
+    /**
+     * Setter method that assigns passed in ArrayList of Orders to orderList.
+     * @param orderlist representing the ArrayList to update orderList.
+     */
     public void setOrderList(ArrayList<Order> orderlist) {
         orderList = orderlist;
     }
@@ -58,6 +61,7 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * switches the scene from Main View to the Coffee View.
      * @param event triggered when the use selects the coffee icon.
@@ -78,6 +82,7 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * switches the scene from Main View to the Order Basket View.
      * @param event triggered when the use selects the shopping cart icon.
@@ -98,6 +103,7 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * switches the scene from Main View to the Order History View.
      * @param event triggered when the use selects the order history icon.
@@ -118,6 +124,5 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
-
 
 }
