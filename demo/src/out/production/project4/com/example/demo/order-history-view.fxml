@@ -5,14 +5,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.OrderHistoryController">
    <children>
-      <TableView layoutX="125.0" layoutY="17.0" prefHeight="359.0" prefWidth="449.0">
+      <TableView fx:id="orderTable" layoutX="125.0" layoutY="17.0" prefHeight="359.0" prefWidth="449.0">
         <columns>
           <TableColumn fx:id="orderNumberCol" prefWidth="75.0" text="Order #" />
           <TableColumn fx:id="orderItemCol" prefWidth="284.20001220703125" text="Items" />
             <TableColumn fx:id="orderPriceCol" prefWidth="88.79998168945315" text="Price" />
         </columns>
       </TableView>
-      <Button layoutX="16.0" layoutY="258.0" mnemonicParsing="false" text="View Orders" />
+      <Button layoutX="16.0" layoutY="258.0" mnemonicParsing="false" onAction="#viewOrder" text="View Orders" />
       <Button layoutX="14.0" layoutY="294.0" mnemonicParsing="false" onAction="#orderBackToMain" text="Back" />
       <Button layoutX="14.0" layoutY="333.0" mnemonicParsing="false" onAction="#writeToFile" text="Export" />
       <Label fx:id="orderMessage" layoutX="14.0" layoutY="368.0" text="Label" />
